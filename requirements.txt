@@ -1,0 +1,2 @@
+npm i svelte-routing
+npm i uuid
