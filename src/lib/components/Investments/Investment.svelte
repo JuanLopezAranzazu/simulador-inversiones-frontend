@@ -3,6 +3,12 @@
   export let keys;
   export let updateItem;
   export let deleteItem;
+
+  function calculateTotal(investment) {
+    return investment.price * investment.qty * investment.currency.value;
+  }
+
+  $: total = calculateTotal(item);
 </script>
 
 <div class="investment">
@@ -10,6 +16,7 @@
     {#each keys as key}
       <p>{key}: {item[key]}</p>
     {/each}
+    <p>total: {total.toLocaleString()}</p>
   </div>
   <div class="investment-actions">
     <button on:click={() => updateItem(item)}>Editar</button>

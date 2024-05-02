@@ -46,7 +46,7 @@
   }
 
   function updateInvestment(updatedInvestment) {
-    const { currency } = newInvestment;
+    const { currency } = updatedInvestment;
     const c = $currencyData.find((c) => c._id === currency);
     investmentData.update((data) =>
       data.map((investment) =>
@@ -85,7 +85,7 @@
     on:click={() => {
       resetFields();
       openModal();
-    }}>Crear Moneda</button
+    }}>Crear Inversión</button
   >
 
   {#if showModal}

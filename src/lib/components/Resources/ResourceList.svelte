@@ -4,6 +4,7 @@
   export let keys;
   export let updateItem;
   export let deleteItem;
+  export let seeItem;
 </script>
 
 <div class="resource-list">
@@ -14,6 +15,7 @@
       {keys}
       {updateItem}
       {deleteItem}
+      {seeItem}
     />
   {/each}
 </div>

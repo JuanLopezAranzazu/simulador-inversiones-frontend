@@ -5,25 +5,24 @@
   import Resource from "./Resource.svelte";
   import Modal from "./../Modal.svelte";
   import Input from "./../Input.svelte";
+  import Table from "./../Table.svelte";
   //store
-  import { resourceData } from "./../../store/store";
+  import { resourceData, investmentData } from "./../../store/store";
+  //utils
+  import { data } from "./../../utils/calculate";
 
   const types = ["Propio", "Externo"];
-  const typesPeriodicity = [
-    "Mensual",
-    "Bimestral",
-    "Trimestral",
-    "Cuatrimestral",
-    "Semestral",
-  ];
+  const keys = Object.keys(data);
 
   let showModal = false;
+  let showTableModal = false;
+  let showWarningModal = false;
   let selectedResource = null;
   let description = "";
   let value = 0;
   let rate = 0;
   let term = 0;
-  let periodicity = typesPeriodicity[0];
+  let periodicity = keys[0];
   let type = types[0];
 
   function resetFields() {
@@ -31,7 +30,7 @@
     value = 0;
     rate = 0;
     term = 0;
-    periodicity = typesPeriodicity[0];
+    periodicity = keys[0];
     type = types[0];
     selectedResource = null;
   }
@@ -44,7 +43,36 @@
     showModal = false;
   }
 
+  function openTableModal() {
+    showTableModal = true;
+  }
+
+  function closeTableModal() {
+    showTableModal = false;
+  }
+
+  function openWarningModal() {
+    showWarningModal = true;
+  }
+
+  function closeWarningModal() {
+    showWarningModal = false;
+  }
   function createResource(newResource) {
+    const total1 = $investmentData.reduce(
+      (acc, investment) =>
+        acc + investment.price * investment.qty * investment.currency.value,
+      0
+    );
+    const total2 = $resourceData.reduce(
+      (acc, resource) => acc + resource.value,
+      0
+    );
+    const { value } = newResource;
+    if (total2 + value > total1) {
+      openWarningModal();
+      return;
+    }
     resourceData.update((data) => [...data, { _id: uuidv4(), ...newResource }]);
     closeModal();
   }
@@ -83,18 +111,22 @@
       openModal();
     }}
     deleteItem={deleteResource}
+    seeItem={(resource) => {
+      selectedResource = resource;
+      openTableModal();
+    }}
   />
   <button
     on:click={() => {
       resetFields();
       openModal();
-    }}>Crear Moneda</button
+    }}>Crear Recurso</button
   >
 
   {#if showModal}
     <Modal>
       <div class="modal-header">
-        <h2>{selectedResource ? "Editar" : "Crear"} Inversión</h2>
+        <h2>{selectedResource ? "Editar" : "Crear"} Recurso</h2>
       </div>
       <div class="modal-content">
         <input type="text" bind:value={description} placeholder="Descripción" />
@@ -106,8 +138,8 @@
         />
         <input type="number" bind:value={term} placeholder="Plazo en meses" />
         <select bind:value={periodicity}>
-          {#each typesPeriodicity as p}
-            <option value={p}>{p}</option>
+          {#each keys as k}
+            <option value={k}>{k}</option>
           {/each}
         </select>
         <select bind:value={type}>
@@ -141,6 +173,37 @@
       </div>
     </Modal>
   {/if}
+
+  {#if showTableModal}
+    <Modal>
+      <div class="modal-header">
+        <h2>Tabla de Amortización</h2>
+      </div>
+      <div class="modal-content">
+        <Table item={selectedResource} />
+      </div>
+      <div class="modal-footer">
+        <button on:click={closeTableModal}>Cerrar</button>
+      </div>
+    </Modal>
+  {/if}
+
+  {#if showWarningModal}
+    <Modal>
+      <div class="modal-header">
+        <h2>Advertencia</h2>
+      </div>
+      <div class="modal-content">
+        <p>
+          No se puede crear este recurso porque está superando el total de
+          inversión.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button on:click={closeWarningModal}>Aceptar</button>
+      </div>
+    </Modal>
+  {/if}
 </div>
 
 <style>
@@ -148,5 +211,10 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+
+  .modal-content {
+    overflow-y: auto;
+    max-height: 300px;
   }
 </style>

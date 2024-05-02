@@ -1,26 +1,25 @@
 <script>
+  //utils
+  import { calculateTotalInvestmentByType } from "./../../utils/calculate";
   //store
-  import { investmentData } from "../../store/store";
+  import {
+    investmentData,
+    totalInvestmentByType1,
+    totalInvestmentByType2,
+  } from "../../store/store";
 
-  function calculateTotalByType(investments, type) {
-    return investments
-      .filter((investment) => investment.type === type)
-      .reduce(
-        (total, investment) =>
-          total + investment.price * investment.qty * investment.currency.value,
-        0
-      );
-  }
+  // $: total1 = calculateTotalInvestmentByType($investmentData, "Fija");
+  // $: total2 = calculateTotalInvestmentByType($investmentData, "Variable");
+  // $: total3 = total1 + total2;
 
-  $: total1 = calculateTotalByType($investmentData, "Fija");
-  $: total2 = calculateTotalByType($investmentData, "Variable");
+  $: total = $totalInvestmentByType1 + $totalInvestmentByType2;
 </script>
 
 <div class="investment-details">
   <h1>Detalles de inversión</h1>
-
-  <p>Inversiones fijas: ${total1.toLocaleString()}</p>
-  <p>Inversiones variables: ${total2.toLocaleString()}</p>
+  <p>Total inversiones: ${total.toLocaleString()}</p>
+  <p>Inversiones fijas: ${$totalInvestmentByType1.toLocaleString()}</p>
+  <p>Inversiones variables: ${$totalInvestmentByType2.toLocaleString()}</p>
 </div>
 
 <style>

@@ -1,22 +1,25 @@
 <script>
+  //utils
+  import { calculateTotalResourceByType } from "./../../utils/calculate";
   //store
-  import { resourceData } from "../../store/store";
+  import {
+    resourceData,
+    totalResourceByType1,
+    totalResourceByType2,
+  } from "../../store/store";
 
-  function calculateTotalByType(resources, type) {
-    return resources
-      .filter((resource) => resource.type === type)
-      .reduce((total, resource) => total + resource.value, 0);
-  }
+  // $: total1 = calculateTotalResourceByType($resourceData, "Propio");
+  // $: total2 = calculateTotalResourceByType($resourceData, "Externo");
+  // $: total3 = total1 + total2;
 
-  $: total1 = calculateTotalByType($resourceData, "Propio");
-  $: total2 = calculateTotalByType($resourceData, "Externo");
+  $: total = $totalResourceByType1 + $totalResourceByType2;
 </script>
 
 <div class="resource-details">
   <h1>Detalles de financiación</h1>
-
-  <p>Recursos propios: ${total1.toLocaleString()}</p>
-  <p>Recursos externos: ${total2.toLocaleString()}</p>
+  <p>Total recursos: ${total.toLocaleString()}</p>
+  <p>Recursos propios: ${$totalResourceByType1.toLocaleString()}</p>
+  <p>Recursos externos: ${$totalResourceByType2.toLocaleString()}</p>
 </div>
 
 <style>
