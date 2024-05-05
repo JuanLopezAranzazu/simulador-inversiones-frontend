@@ -17,6 +17,8 @@
   let qty = 0;
   let type = types[0];
   let currency = $currencyData[0]._id;
+  let filteredElements = [];
+  let selectedType = "";
 
   function resetFields() {
     description = "";
@@ -63,11 +65,45 @@
       data.filter((investment) => investment._id !== investmentId)
     );
   }
+
+  $: filteredElements =
+    selectedType === ""
+      ? $investmentData
+      : $investmentData.filter(
+          (investment) => investment.type === selectedType
+        );
 </script>
 
 <div class="investments">
+  <div class="options">
+    <button
+      class:active={selectedType === ""}
+      on:click={() => {
+        selectedType = "";
+      }}
+    >
+      Todos
+    </button>
+    <button
+      class:active={selectedType === "Fija"}
+      on:click={() => {
+        selectedType = "Fija";
+      }}
+    >
+      Fija
+    </button>
+    <button
+      class:active={selectedType === "Variable"}
+      on:click={() => {
+        selectedType = "Variable";
+      }}
+    >
+      Variable
+    </button>
+  </div>
+
   <InvestmentList
-    items={$investmentData}
+    items={filteredElements}
     component={Investment}
     keys={["description", "price", "qty", "type"]}
     updateItem={(investment) => {
@@ -127,5 +163,15 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+
+  .options {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .active {
+    background-color: var(--color2);
   }
 </style>

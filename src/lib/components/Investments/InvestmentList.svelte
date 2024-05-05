@@ -7,15 +7,19 @@
 </script>
 
 <div class="investment-list">
-  {#each items as item}
-    <svelte:component
-      this={component}
-      {item}
-      {keys}
-      {updateItem}
-      {deleteItem}
-    />
-  {/each}
+  {#if items.length === 0}
+    <p>No hay inversiones</p>
+  {:else}
+    {#each items as item}
+      <svelte:component
+        this={component}
+        {item}
+        {keys}
+        {updateItem}
+        {deleteItem}
+      />
+    {/each}
+  {/if}
 </div>
 
 <style>

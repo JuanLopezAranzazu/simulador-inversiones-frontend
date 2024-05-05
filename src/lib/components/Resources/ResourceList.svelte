@@ -8,16 +8,20 @@
 </script>
 
 <div class="resource-list">
-  {#each items as item}
-    <svelte:component
-      this={component}
-      {item}
-      {keys}
-      {updateItem}
-      {deleteItem}
-      {seeItem}
-    />
-  {/each}
+  {#if items.length === 0}
+    <p>No hay recursos</p>
+  {:else}
+    {#each items as item}
+      <svelte:component
+        this={component}
+        {item}
+        {keys}
+        {updateItem}
+        {deleteItem}
+        {seeItem}
+      />
+    {/each}
+  {/if}
 </div>
 
 <style>

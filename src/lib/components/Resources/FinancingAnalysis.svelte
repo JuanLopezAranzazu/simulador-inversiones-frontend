@@ -41,7 +41,7 @@
       // const value = calculateTotalResourceByType($resourceData, types[i]);
       const value =
         types[i] === "Propio" ? $totalResourceByType1 : $totalResourceByType2;
-      const p = (value * 100) / $totalInvestment;
+      const p = $totalInvestment && (value * 100) / $totalInvestment;
       const totalCPPC = $resourceData.reduce((total, resource) => {
         if (resource.type === types[i]) {
           const periods = data[resource.periodicity];

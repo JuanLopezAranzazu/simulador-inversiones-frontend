@@ -24,6 +24,8 @@
   let term = 0;
   let periodicity = keys[0];
   let type = types[0];
+  let filteredElements = [];
+  let selectedType = "";
 
   function resetFields() {
     description = "";
@@ -93,11 +95,43 @@
       data.filter((resource) => resource._id !== resourceId)
     );
   }
+
+  $: filteredElements =
+    selectedType === ""
+      ? $resourceData
+      : $resourceData.filter((resource) => resource.type === selectedType);
 </script>
 
 <div class="resources">
+  <div class="options">
+    <button
+      class:active={selectedType === ""}
+      on:click={() => {
+        selectedType = "";
+      }}
+    >
+      Todos
+    </button>
+    <button
+      class:active={selectedType === "Propio"}
+      on:click={() => {
+        selectedType = "Propio";
+      }}
+    >
+      Propio
+    </button>
+    <button
+      class:active={selectedType === "Externo"}
+      on:click={() => {
+        selectedType = "Externo";
+      }}
+    >
+      Externo
+    </button>
+  </div>
+
   <ResourceList
-    items={$resourceData}
+    items={filteredElements}
     component={Resource}
     keys={["description", "value", "rate", "term", "periodicity", "type"]}
     updateItem={(resource) => {
@@ -216,5 +250,15 @@
   .modal-content {
     overflow-y: auto;
     max-height: 300px;
+  }
+
+  .options {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .active {
+    background-color: var(--color2);
   }
 </style>

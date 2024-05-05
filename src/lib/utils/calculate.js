@@ -14,6 +14,10 @@ export function calculatePeriodicRate(nominalRate, periods) {
   return nominalRate / periods;
 }
 
+export function calculateShare(value, rate, term) {
+  return (value * rate) / (1 - Math.pow(1 + rate, -term));
+}
+
 export function calculateTotalResourceByType(resources, type) {
   return resources
     .filter((resource) => resource.type === type)
