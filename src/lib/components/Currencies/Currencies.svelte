@@ -97,7 +97,7 @@
         <input type="number" bind:value placeholder="Valor" />
       </div>
       <div class="modal-footer">
-        <button on:click={closeModal}>Cancelar</button>
+        <button type="button" on:click={closeModal}>Cancelar</button>
         <button
           type="button"
           on:click={selectedCurrency
@@ -121,7 +121,7 @@
         </p>
       </div>
       <div class="modal-footer">
-        <button on:click={closeWarningModal}>Aceptar</button>
+        <button type="button" on:click={closeWarningModal}>Aceptar</button>
       </div>
     </Modal>
   {/if}
@@ -135,5 +135,12 @@
     background-color: var(--color3);
     border-radius: 8px;
     padding: 10px;
+  }
+
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 500px;
   }
 </style>

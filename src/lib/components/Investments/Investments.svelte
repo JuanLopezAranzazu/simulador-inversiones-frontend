@@ -90,7 +90,7 @@
         selectedType = "Fija";
       }}
     >
-      Fija
+      Inversión Fija
     </button>
     <button
       class:active={selectedType === "Variable"}
@@ -98,7 +98,7 @@
         selectedType = "Variable";
       }}
     >
-      Variable
+      Inversión Variable
     </button>
   </div>
 
@@ -145,7 +145,7 @@
         </select>
       </div>
       <div class="modal-footer">
-        <button on:click={closeModal}>Cancelar</button>
+        <button type="button" on:click={closeModal}>Cancelar</button>
         <button
           type="button"
           on:click={selectedInvestment
@@ -163,6 +163,13 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 500px;
   }
 
   .options {

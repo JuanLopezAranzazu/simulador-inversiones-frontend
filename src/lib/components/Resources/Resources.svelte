@@ -118,7 +118,7 @@
         selectedType = "Propio";
       }}
     >
-      Propio
+      Recursos Propios
     </button>
     <button
       class:active={selectedType === "Externo"}
@@ -126,7 +126,7 @@
         selectedType = "Externo";
       }}
     >
-      Externo
+      Recursos Externos
     </button>
   </div>
 
@@ -248,8 +248,12 @@
   }
 
   .modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     overflow-y: auto;
     max-height: 300px;
+    width: 500px;
   }
 
   .options {

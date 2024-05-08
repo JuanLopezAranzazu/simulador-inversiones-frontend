@@ -1,7 +1,17 @@
 <script>
+  // assets
+  import Icon from "../assets/Icon.svelte";
+  import Icon2 from "../assets/Icon2.svelte";
+  import Icon3 from "../assets/Icon3.svelte";
+  import Icon4 from "../assets/Icon4.svelte";
+  //components
+  import Navbar from "./Navbar.svelte";
+
   const links = [
-    { text: "Inversión", url: "/" },
-    { text: "Financiación", url: "/financing" },
+    { text: "Inversión", url: "/", component: Icon },
+    { text: "Financiación", url: "/financing", component: Icon2 },
+    { text: "Flujo de caja", url: "/", component: Icon3 },
+    { text: "Escenarios Combinados", url: "/", component: Icon4 },
   ];
 </script>
 
@@ -10,11 +20,7 @@
     <div class="header-elements">
       <h2>Investment Simulator</h2>
     </div>
-    <div class="header-elements">
-      {#each links as link}
-        <a href={link.url}>{link.text}</a>
-      {/each}
-    </div>
+    <Navbar {links} />
   </div>
 </header>
 

@@ -9,7 +9,7 @@ body {
   --color2: #fca311;
   --color3: #e5e5e5;
   --color4: #193a7f;
-  --color: #e7195a;
+  --color5: #e7195a;
   --site-width: 1280px;
 }
 
@@ -29,4 +29,9 @@ button {
   padding: 10px;
   border-radius: 4px;
   cursor: pointer;
+}
+
+button.delete {
+  background: var(--color5);
+  color: #fff;
 }
