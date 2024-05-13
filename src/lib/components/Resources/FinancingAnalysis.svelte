@@ -58,8 +58,10 @@
 </script>
 
 <div class="analysis">
-  <h1>Analisis de financiación</h1>
-  <button on:click={openModal}>Analizar</button>
+  <h2>Analisis de financiación</h2>
+  <div class="see-data">
+    <button on:click={openModal}>Analizar</button>
+  </div>
 
   {#if showModal}
     <Modal>
@@ -99,9 +101,22 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    background-color: var(--color3);
-    border-radius: 8px;
     padding: 10px;
+    border: 1px solid #a9a9a9;
+    border-radius: 8px;
+    background-color: var(--color3);
+    box-shadow: 0px 0px 5px 0px #a9a9a9;
+  }
+
+  .see-data {
+    display: flex;
+    justify-content: center;
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
   }
 
   table {

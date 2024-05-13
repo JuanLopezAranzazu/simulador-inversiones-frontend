@@ -23,6 +23,20 @@ function persist(key, value) {
   return store;
 }
 
+// persisting data
+// export const currencyData = persist("currency-data", [
+//   {
+//     _id: uuidv4(),
+//     name: "COP",
+//     value: 1,
+//   },
+//   {
+//     _id: uuidv4(),
+//     name: "USD",
+//     value: 3000,
+//   },
+// ]);
+
 export const currencyData = persist("currency-data", [
   {
     _id: uuidv4(),
@@ -34,16 +48,43 @@ export const currencyData = persist("currency-data", [
     name: "USD",
     value: 3000,
   },
+  {
+    _id: uuidv4(),
+    name: "EUR",
+    value: 3000,
+  },
 ]);
 export const investmentData = persist("investment-data", []);
 export const resourceData = persist("resource-data", []);
+export const selectedInvestment = persist("selected-investment", null);
 
-export const totalInvestment = derived(investmentData, ($investmentData) =>
-  $investmentData.reduce(
-    (total, investment) =>
-      total + investment.price * investment.qty * investment.currency.value,
-    0
-  )
+// derived stores
+// export const totalInvestment = derived(investmentData, ($investmentData) =>
+//   $investmentData.reduce(
+//     (total, investment) =>
+//       total + investment.price * investment.qty * investment.currency.value,
+//     0
+//   )
+// );
+
+export const totalInvestment = derived(
+  [investmentData, currencyData],
+  ([$investmentData, $currencyData]) =>
+    $investmentData.reduce(
+      (total, investment) =>
+        total +
+        investment.subelements.reduce(
+          (total, investment) =>
+            total +
+            investment.price *
+              investment.qty *
+              $currencyData.find(
+                (currency) => currency._id === investment.currency
+              ).value,
+          0
+        ),
+      0
+    )
 );
 
 export const totalResources = derived(resourceData, ($resourceData) =>
@@ -51,16 +92,24 @@ export const totalResources = derived(resourceData, ($resourceData) =>
 );
 
 export const totalInvestmentByType1 = derived(
-  investmentData,
-  ($investmentData) => {
-    return calculateTotalInvestmentByType($investmentData, "Fija");
+  [investmentData, currencyData],
+  ([$investmentData, $currencyData]) => {
+    return calculateTotalInvestmentByType(
+      $investmentData,
+      $currencyData,
+      "Fija"
+    );
   }
 );
 
 export const totalInvestmentByType2 = derived(
-  investmentData,
-  ($investmentData) => {
-    return calculateTotalInvestmentByType($investmentData, "Variable");
+  [investmentData, currencyData],
+  ([$investmentData, $currencyData]) => {
+    return calculateTotalInvestmentByType(
+      $investmentData,
+      $currencyData,
+      "Variable"
+    );
   }
 );
 

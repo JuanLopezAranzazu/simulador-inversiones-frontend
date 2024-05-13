@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
   export let item;
   export let keys;
   export let updateItem;
@@ -51,5 +51,45 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
+  }
+</style> -->
+
+<script>
+  //components
+  import Text from "../Text.svelte";
+  export let investment;
+  export let updateInvestment;
+  export let deleteInvestment;
+</script>
+
+<div class="item">
+  <div class="investment-info">
+    <Text label="Descripción" value={investment.description} />
+    <Text label="Tipo" value={investment.type} />
+  </div>
+  <div class="investment-actions">
+    <button type="button" on:click={() => updateInvestment(investment)}
+      >Editar</button
+    >
+    <button
+      type="button"
+      class="delete"
+      on:click={() => deleteInvestment(investment._id)}>Eliminar</button
+    >
+  </div>
+</div>
+
+<style>
+  .investment-info {
+    display: flex;
+    gap: 1rem;
+    flex: 1;
+  }
+
+  .investment-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
   }
 </style>

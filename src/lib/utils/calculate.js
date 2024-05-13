@@ -24,12 +24,36 @@ export function calculateTotalResourceByType(resources, type) {
     .reduce((total, resource) => total + resource.value, 0);
 }
 
-export function calculateTotalInvestmentByType(investments, type) {
+// export function calculateTotalInvestmentByType(investments, type) {
+//   return investments
+//     .filter((investment) => investment.type === type)
+//     .reduce(
+//       (total, investment) =>
+//         total + investment.price * investment.qty * investment.currency.value,
+//       0
+//     );
+// }
+
+export function calculateTotalInvestmentByType(
+  investments,
+  currencyData,
+  type
+) {
   return investments
     .filter((investment) => investment.type === type)
     .reduce(
       (total, investment) =>
-        total + investment.price * investment.qty * investment.currency.value,
+        total +
+        investment.subelements.reduce(
+          (total, investment) =>
+            total +
+            investment.price *
+              investment.qty *
+              currencyData.find(
+                (currency) => currency._id === investment.currency
+              ).value,
+          0
+        ),
       0
     );
 }

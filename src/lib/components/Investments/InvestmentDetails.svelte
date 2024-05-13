@@ -16,7 +16,7 @@
 </script>
 
 <div class="investment-details">
-  <h1>Detalles de inversión</h1>
+  <h2>Detalles de inversión</h2>
   <p>Total inversiones: ${total.toLocaleString()}</p>
   <p>Inversiones fijas: ${$totalInvestmentByType1.toLocaleString()}</p>
   <p>Inversiones variables: ${$totalInvestmentByType2.toLocaleString()}</p>
@@ -27,8 +27,10 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    background-color: var(--color3);
-    border-radius: 8px;
     padding: 10px;
+    border: 1px solid #a9a9a9;
+    border-radius: 8px;
+    background-color: var(--color3);
+    box-shadow: 0px 0px 5px 0px #a9a9a9;
   }
 </style>

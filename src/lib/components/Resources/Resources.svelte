@@ -2,12 +2,15 @@
   import { v4 as uuidv4 } from "uuid";
   //components
   import ResourceList from "./ResourceList.svelte";
-  import Resource from "./Resource.svelte";
   import Modal from "./../Modal.svelte";
   import Input from "./../Input.svelte";
   import Table from "./../Table.svelte";
   //store
-  import { resourceData, investmentData } from "./../../store/store";
+  import {
+    resourceData,
+    totalInvestment,
+    totalResources,
+  } from "./../../store/store";
   //utils
   import { data } from "./../../utils/calculate";
 
@@ -61,17 +64,8 @@
     showWarningModal = false;
   }
   function createResource(newResource) {
-    const total1 = $investmentData.reduce(
-      (acc, investment) =>
-        acc + investment.price * investment.qty * investment.currency.value,
-      0
-    );
-    const total2 = $resourceData.reduce(
-      (acc, resource) => acc + resource.value,
-      0
-    );
     const { value } = newResource;
-    if (total2 + value > total1) {
+    if ($totalResources + value > $totalInvestment) {
       openWarningModal();
       return;
     }
@@ -80,6 +74,11 @@
   }
 
   function updateResource(updatedResource) {
+    const { value } = updatedResource;
+    if ($totalResources + value > $totalInvestment) {
+      openWarningModal();
+      return;
+    }
     resourceData.update((data) =>
       data.map((resource) =>
         resource._id === selectedResource._id
@@ -130,11 +129,18 @@
     </button>
   </div>
 
+  <div class="save-data">
+    <button
+      on:click={() => {
+        resetFields();
+        openModal();
+      }}>Crear Recurso</button
+    >
+  </div>
+
   <ResourceList
-    items={filteredElements}
-    component={Resource}
-    keys={["description", "value", "rate", "term", "periodicity", "type"]}
-    updateItem={(resource) => {
+    resources={filteredElements}
+    updateResource={(resource) => {
       selectedResource = resource;
       description = resource.description;
       value = resource.value;
@@ -144,18 +150,12 @@
       type = resource.type;
       openModal();
     }}
-    deleteItem={deleteResource}
-    seeItem={(resource) => {
+    {deleteResource}
+    seeResource={(resource) => {
       selectedResource = resource;
       openTableModal();
     }}
   />
-  <button
-    on:click={() => {
-      resetFields();
-      openModal();
-    }}>Crear Recurso</button
-  >
 
   {#if showModal}
     <Modal>
@@ -256,6 +256,12 @@
     width: 500px;
   }
 
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+
   .options {
     display: flex;
     justify-content: center;
@@ -264,5 +270,11 @@
 
   .active {
     background-color: var(--color2);
+  }
+
+  .save-data {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
   }
 </style>
