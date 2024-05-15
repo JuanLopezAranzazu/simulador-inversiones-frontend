@@ -52,7 +52,12 @@
         }
         return total;
       }, 0);
-      elements.push([description, value, p, totalCPPC]);
+      elements.push([
+        description,
+        `${value.toLocaleString()}$`,
+        `${p.toFixed(2)}%`,
+        `${totalCPPC.toFixed(2)}%`,
+      ]);
     }
   }
 </script>

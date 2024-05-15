@@ -75,7 +75,11 @@
 
   function updateResource(updatedResource) {
     const { value } = updatedResource;
-    if ($totalResources + value > $totalInvestment) {
+    const resource = $resourceData.find(
+      (resource) => resource._id === selectedResource._id
+    );
+    const oldValue = resource.value;
+    if ($totalResources - oldValue + value > $totalInvestment) {
       openWarningModal();
       return;
     }
@@ -109,7 +113,7 @@
         selectedType = "";
       }}
     >
-      Todos
+      Recursos Todos
     </button>
     <button
       class:active={selectedType === "Propio"}

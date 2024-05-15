@@ -46,3 +46,8 @@ button.delete {
   background-color: var(--color3);
   box-shadow: 0px 0px 5px 0px #a9a9a9;
 }
+
+.item-alt {
+  background-color: var(--color1);
+  color: #fff;
+}

@@ -215,7 +215,7 @@
         selectedType = "";
       }}
     >
-      Todos
+      Inversión Todos
     </button>
     <button
       class:active={selectedType === "Fija"}

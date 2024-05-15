@@ -57,31 +57,74 @@
 <script>
   //components
   import Text from "../Text.svelte";
+  import SubelementList from "./../ManageInvestment/SubelementList.svelte";
+  //stores
+  import { currencyData } from "./../../store/store";
+  //utils
+  import { calculateTotalInvestment } from "./../../utils/calculate";
   export let investment;
   export let updateInvestment;
   export let deleteInvestment;
+
+  let viewItems = false;
+
+  function seeInvestment() {
+    viewItems = !viewItems;
+  }
+
+  $: total =
+    calculateTotalInvestment(investment, $currencyData) * investment.multiplier;
 </script>
 
-<div class="item">
-  <div class="investment-info">
-    <Text label="Descripción" value={investment.description} />
-    <Text label="Tipo" value={investment.type} />
+<div class="item-container">
+  <div class="item">
+    <div class="investment-info">
+      <Text label="Descripción" value={investment.description} />
+      <Text label="Total" value={total.toLocaleString()} />
+      <Text label="Tipo de inversión" value={investment.type} />
+      {#if investment.type === "Variable"}
+        <Text
+          label="Tiempo del proyecto"
+          value={investment.multiplier.toLocaleString()}
+        />
+      {:else}
+        <Text label="" value={""} />
+      {/if}
+    </div>
+    <div class="investment-actions">
+      <button type="button" on:click={() => seeInvestment()}
+        >{viewItems ? "Ocultar" : "Mostrar"}</button
+      >
+      <button type="button" on:click={() => updateInvestment(investment)}
+        >Editar</button
+      >
+      <button
+        type="button"
+        class="delete"
+        on:click={() => deleteInvestment(investment._id)}>Eliminar</button
+      >
+    </div>
   </div>
-  <div class="investment-actions">
-    <button type="button" on:click={() => updateInvestment(investment)}
-      >Editar</button
-    >
-    <button
-      type="button"
-      class="delete"
-      on:click={() => deleteInvestment(investment._id)}>Eliminar</button
-    >
-  </div>
+  {#if viewItems}
+    <SubelementList
+      subelements={investment.subelements}
+      readonly={false}
+      updateSubelement={null}
+      deleteSubelement={null}
+    />
+  {/if}
 </div>
 
 <style>
+  .item-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
   .investment-info {
     display: flex;
+    align-items: center;
     gap: 1rem;
     flex: 1;
   }
@@ -90,6 +133,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
   }
 </style>

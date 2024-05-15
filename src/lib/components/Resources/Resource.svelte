@@ -83,20 +83,27 @@
   <div class="resource-info">
     <div class="resource-info-col">
       <Text label="Descripción" value={resource.description} />
-      <Text label="Capital" value={resource.value} />
-      <Text label="Tasa efectiva anual" value={resource.rate} />
+      <Text label="Capital" value={`${resource.value.toLocaleString()}$`} />
+      <Text
+        label="Tasa efectiva anual"
+        value={`${resource.rate.toFixed(2)}%`}
+      />
     </div>
     <div class="resource-info-col">
       <Text label="Periodicidad" value={resource.periodicity} />
       <Text label="Plazo" value={resource.term} />
-      <Text label="Tasa nominal anual" value={nominalRate} />
+      <Text label="Tasa nominal anual" value={`${nominalRate.toFixed(2)}%`} />
     </div>
     <div class="resource-info-col">
-      <Text label="Participación" value={p} />
-      <Text label="CPPC" value={CPPC} />
+      <Text label="Tipo de recurso" value={resource.type} />
+      <Text label="Participación" value={`${p.toFixed(2)}%`} />
+      <Text label="CPPC" value={`${CPPC.toFixed(2)}%`} />
     </div>
   </div>
   <div class="resource-actions">
+    {#if resource.type === "Externo"}
+      <button type="button" on:click={() => seeResource(resource)}>Ver</button>
+    {/if}
     <button type="button" on:click={() => updateResource(resource)}
       >Editar</button
     >
@@ -105,9 +112,6 @@
       class="delete"
       on:click={() => deleteResource(resource._id)}>Eliminar</button
     >
-    {#if resource.type === "Externo"}
-      <button type="button" on:click={() => seeResource(resource)}>Ver</button>
-    {/if}
   </div>
 </div>
 
@@ -129,6 +133,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
   }
 </style>

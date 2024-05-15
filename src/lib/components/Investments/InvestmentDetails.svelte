@@ -17,9 +17,9 @@
 
 <div class="investment-details">
   <h2>Detalles de inversión</h2>
-  <p>Total inversiones: ${total.toLocaleString()}</p>
-  <p>Inversiones fijas: ${$totalInvestmentByType1.toLocaleString()}</p>
-  <p>Inversiones variables: ${$totalInvestmentByType2.toLocaleString()}</p>
+  <p>Total inversiones: {total.toLocaleString()}$</p>
+  <p>Inversiones fijas: {$totalInvestmentByType1.toLocaleString()}$</p>
+  <p>Inversiones variables: {$totalInvestmentByType2.toLocaleString()}$</p>
 </div>
 
 <style>

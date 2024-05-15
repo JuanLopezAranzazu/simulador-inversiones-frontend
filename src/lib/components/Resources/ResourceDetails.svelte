@@ -17,9 +17,9 @@
 
 <div class="resource-details">
   <h2>Detalles de financiación</h2>
-  <p>Total recursos: ${total.toLocaleString()}</p>
-  <p>Recursos propios: ${$totalResourceByType1.toLocaleString()}</p>
-  <p>Recursos externos: ${$totalResourceByType2.toLocaleString()}</p>
+  <p>Total recursos: {total.toLocaleString()}$</p>
+  <p>Recursos propios: {$totalResourceByType1.toLocaleString()}$</p>
+  <p>Recursos externos: {$totalResourceByType2.toLocaleString()}$</p>
 </div>
 
 <style>

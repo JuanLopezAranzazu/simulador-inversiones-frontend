@@ -34,6 +34,22 @@ export function calculateTotalResourceByType(resources, type) {
 //     );
 // }
 
+export function calculateTotalSubelement(subelement, valueCurrency) {
+  return subelement.price * subelement.qty * valueCurrency;
+}
+
+export function calculateTotalInvestment(investment, currencyData) {
+  return investment.subelements.reduce(
+    (total, investment) =>
+      total +
+      investment.price *
+        investment.qty *
+        currencyData.find((currency) => currency._id === investment.currency)
+          .value,
+    0
+  );
+}
+
 export function calculateTotalInvestmentByType(
   investments,
   currencyData,
@@ -53,7 +69,8 @@ export function calculateTotalInvestmentByType(
                 (currency) => currency._id === investment.currency
               ).value,
           0
-        ),
+        ) *
+          investment.multiplier,
       0
     );
 }

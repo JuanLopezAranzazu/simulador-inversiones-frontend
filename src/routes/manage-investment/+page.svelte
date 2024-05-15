@@ -11,6 +11,7 @@
     investmentData,
     selectedInvestment,
   } from "./../../lib/store/store";
+  import { calculateTotalInvestment } from "../../lib/utils/calculate";
 
   const types = ["Fija", "Variable"];
 
@@ -23,11 +24,13 @@
     selectedInvestment.update((data) => (data = null));
   }
 
+  //set initial values
   let subelements = writable(
     $selectedInvestment ? $selectedInvestment.subelements : []
   );
   let description = $selectedInvestment ? $selectedInvestment.description : "";
   let type = $selectedInvestment ? $selectedInvestment.type : types[0];
+  let multiplier = $selectedInvestment ? $selectedInvestment.multiplier : 1;
   let descriptionSubelement = "";
   let price = 0;
   let qty = 0;
@@ -129,6 +132,13 @@
               <option value={t}>{t}</option>
             {/each}
           </select>
+          {#if type === "Variable"}
+            <input
+              type="number"
+              bind:value={multiplier}
+              placeholder="Tiempo del proyecto"
+            />
+          {/if}
         </div>
       </div>
       <div class="form">
@@ -152,6 +162,13 @@
         <div class="form-footer">
           <button
             type="button"
+            on:click={() => {
+              resetFields();
+              selectedSubelement = null;
+            }}>Cancelar</button
+          >
+          <button
+            type="button"
             on:click={selectedSubelement
               ? updateSubelement({
                   descriptionSubelement,
@@ -171,12 +188,26 @@
     </div>
     <div class="subelements">
       <div class="save-data">
+        <p>
+          Total parcial:
+          {calculateTotalInvestment(
+            { subelements: $subelements },
+            $currencyData
+          ).toLocaleString()}$
+        </p>
         <button
           type="button"
           on:click={() => {
+            const elementData = {
+              description,
+              type,
+              multiplier: type === "Variable" ? multiplier : 1,
+              subelements: $subelements,
+            };
+
             $selectedInvestment !== null
-              ? updateElement({ description, type, subelements: $subelements })
-              : createElement({ description, type, subelements: $subelements });
+              ? updateElement(elementData)
+              : createElement(elementData);
           }}
           >{$selectedInvestment === null ? "Crear" : "Editar"} Inversión</button
         >
@@ -240,7 +271,8 @@
 
   .save-data {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
     gap: 1rem;
   }
 </style>
