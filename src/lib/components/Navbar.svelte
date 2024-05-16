@@ -25,7 +25,7 @@
     color: white;
   }
 
-  .active {
-    border-bottom: 1px solid var(--color2);
+  a:hover {
+    color: var(--color2);
   }
 </style>

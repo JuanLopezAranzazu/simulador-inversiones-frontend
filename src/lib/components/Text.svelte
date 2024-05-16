@@ -1,9 +1,12 @@
 <script>
   export let label;
   export let value;
+  export let state = true;
+
+  $: style = !state ? "flex: none;" : "flex: 1;";
 </script>
 
-<div class="text">
+<div class="text" {style}>
   <p class="label"><b>{label}</b></p>
   <p>{value}</p>
 </div>

@@ -24,16 +24,6 @@ export function calculateTotalResourceByType(resources, type) {
     .reduce((total, resource) => total + resource.value, 0);
 }
 
-// export function calculateTotalInvestmentByType(investments, type) {
-//   return investments
-//     .filter((investment) => investment.type === type)
-//     .reduce(
-//       (total, investment) =>
-//         total + investment.price * investment.qty * investment.currency.value,
-//       0
-//     );
-// }
-
 export function calculateTotalSubelement(subelement, valueCurrency) {
   return subelement.price * subelement.qty * valueCurrency;
 }

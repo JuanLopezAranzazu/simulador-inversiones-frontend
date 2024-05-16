@@ -1,25 +1,28 @@
 <script>
-  //utils
-  import { calculateTotalInvestmentByType } from "./../../utils/calculate";
+  //components
+  import Text from "./../Text.svelte";
   //store
   import {
-    investmentData,
     totalInvestmentByType1,
     totalInvestmentByType2,
   } from "../../store/store";
-
-  // $: total1 = calculateTotalInvestmentByType($investmentData, "Fija");
-  // $: total2 = calculateTotalInvestmentByType($investmentData, "Variable");
-  // $: total3 = total1 + total2;
 
   $: total = $totalInvestmentByType1 + $totalInvestmentByType2;
 </script>
 
 <div class="investment-details">
-  <h2>Detalles de inversión</h2>
-  <p>Total inversiones: {total.toLocaleString()}$</p>
-  <p>Inversiones fijas: {$totalInvestmentByType1.toLocaleString()}$</p>
-  <p>Inversiones variables: {$totalInvestmentByType2.toLocaleString()}$</p>
+  <div class="title">
+    <h2>Detalles de inversión</h2>
+  </div>
+  <Text label="Total inversiones" value={`${total.toLocaleString()}$`} />
+  <Text
+    label="Inversiones fijas"
+    value={`${$totalInvestmentByType1.toLocaleString()}$`}
+  />
+  <Text
+    label="Inversiones variables"
+    value={`${$totalInvestmentByType2.toLocaleString()}$`}
+  />
 </div>
 
 <style>
@@ -27,10 +30,15 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 10px;
+    padding: 1rem;
     border: 1px solid #a9a9a9;
     border-radius: 8px;
     background-color: var(--color3);
     box-shadow: 0px 0px 5px 0px #a9a9a9;
+  }
+
+  .title {
+    display: flex;
+    justify-content: center;
   }
 </style>

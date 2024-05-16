@@ -2,16 +2,10 @@
   //components
   import Modal from "../Modal.svelte";
   //utils
-  import {
-    calculateTotalInvestmentByType,
-    calculateTotalResourceByType,
-    calculateNominalRate,
-    data,
-  } from "./../../utils/calculate";
+  import { calculateNominalRate, data } from "./../../utils/calculate";
   //store
   import {
     resourceData,
-    investmentData,
     totalInvestment,
     totalResourceByType1,
     totalResourceByType2,
@@ -28,17 +22,14 @@
   }
 
   let elements = [];
+  let totalP = 0;
+  let finalTotalCPPC = 0;
   const types = ["Propio", "Externo"];
-
-  // $: total1 = calculateTotalInvestmentByType($investmentData, "Fija");
-  // $: total2 = calculateTotalInvestmentByType($investmentData, "Variable");
-  // $: total3 = total1 + total2;
 
   $: {
     elements = [];
     for (let i = 0; i < types.length; i++) {
       const description = "Recurso " + types[i];
-      // const value = calculateTotalResourceByType($resourceData, types[i]);
       const value =
         types[i] === "Propio" ? $totalResourceByType1 : $totalResourceByType2;
       const p = $totalInvestment && (value * 100) / $totalInvestment;
@@ -52,6 +43,8 @@
         }
         return total;
       }, 0);
+      totalP += p;
+      finalTotalCPPC += totalCPPC;
       elements.push([
         description,
         `${value.toLocaleString()}$`,
@@ -59,6 +52,12 @@
         `${totalCPPC.toFixed(2)}%`,
       ]);
     }
+    elements.push([
+      "Total",
+      `${($totalResourceByType1 + $totalResourceByType2).toLocaleString()}$`,
+      `${totalP.toFixed(2)}%`,
+      `${finalTotalCPPC.toFixed(2)}%`,
+    ]);
   }
 </script>
 
@@ -79,7 +78,7 @@
             <tr>
               <th>Descripción</th>
               <th>Capital</th>
-              <th>Participación</th>
+              <th>Participación%</th>
               <th>CPPC%</th>
             </tr>
           </thead>

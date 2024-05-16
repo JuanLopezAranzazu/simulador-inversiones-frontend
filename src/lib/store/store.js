@@ -24,19 +24,6 @@ function persist(key, value) {
 }
 
 // persisting data
-// export const currencyData = persist("currency-data", [
-//   {
-//     _id: uuidv4(),
-//     name: "COP",
-//     value: 1,
-//   },
-//   {
-//     _id: uuidv4(),
-//     name: "USD",
-//     value: 3000,
-//   },
-// ]);
-
 export const currencyData = persist("currency-data", [
   {
     _id: uuidv4(),
@@ -59,14 +46,6 @@ export const resourceData = persist("resource-data", []);
 export const selectedInvestment = persist("selected-investment", null);
 
 // derived stores
-// export const totalInvestment = derived(investmentData, ($investmentData) =>
-//   $investmentData.reduce(
-//     (total, investment) =>
-//       total + investment.price * investment.qty * investment.currency.value,
-//     0
-//   )
-// );
-
 export const totalInvestment = derived(
   [investmentData, currencyData],
   ([$investmentData, $currencyData]) =>
@@ -82,7 +61,8 @@ export const totalInvestment = derived(
                 (currency) => currency._id === investment.currency
               ).value,
           0
-        ),
+        ) *
+          investment.multiplier,
       0
     )
 );

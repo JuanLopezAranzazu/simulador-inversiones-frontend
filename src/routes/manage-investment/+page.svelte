@@ -65,13 +65,6 @@
   }
 
   function createSubelement(newSubelement) {
-    // const { currency } = newSubelement;
-    // const c = $currencyData.find((c) => c._id === currency);
-    // subelements.update((data) => [
-    //   ...data,
-    //   { _id: uuidv4(), ...newSubelement, currency: c },
-    // ]);
-
     subelements.update((data) => [
       ...data,
       { _id: uuidv4(), ...newSubelement },
@@ -80,16 +73,6 @@
   }
 
   function updateSubelement(updatedSubelement) {
-    // const { currency } = updatedSubelement;
-    // const c = $currencyData.find((c) => c._id === currency);
-    // subelements.update((data) =>
-    //   data.map((subelement) =>
-    //     subelement._id === selectedSubelement._id
-    //       ? { ...subelement, ...updatedSubelement, currency: c }
-    //       : subelement
-    //   )
-    // );
-
     subelements.update((data) =>
       data.map((subelement) =>
         subelement._id === selectedSubelement._id
@@ -118,7 +101,7 @@
       <div class="form">
         <div class="form-header">
           <h2>
-            {$selectedInvestment === null ? "Crear" : "Editar"} Inversión
+            {$selectedInvestment === null ? "Crear" : "Editar"} Cuenta Principal
           </h2>
         </div>
         <div class="form-content">
@@ -143,7 +126,7 @@
       </div>
       <div class="form">
         <div class="form-header">
-          <h2>{selectedSubelement ? "Editar" : "Crear"} Rubro</h2>
+          <h2>{selectedSubelement ? "Editar" : "Crear"} Subcuenta</h2>
         </div>
         <div class="form-content">
           <input
@@ -209,7 +192,7 @@
               ? updateElement(elementData)
               : createElement(elementData);
           }}
-          >{$selectedInvestment === null ? "Crear" : "Editar"} Inversión</button
+          >{$selectedInvestment === null ? "Crear" : "Editar"} Cuenta Principal</button
         >
       </div>
       <SubelementList
@@ -219,7 +202,6 @@
           descriptionSubelement = subelement.descriptionSubelement;
           price = subelement.price;
           qty = subelement.qty;
-          // currency = subelement.currency._id;
           currency = subelement.currency;
         }}
         {deleteSubelement}

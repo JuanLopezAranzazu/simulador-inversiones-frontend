@@ -12,7 +12,7 @@
 <div class="subelements-list" {style}>
   {#if readonly}
     <div class="title">
-      <p>Lista de rubros</p>
+      <p>Lista de subcuentas</p>
     </div>
   {/if}
   {#each subelements as subelement}

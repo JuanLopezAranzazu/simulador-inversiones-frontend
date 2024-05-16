@@ -1,59 +1,3 @@
-<!-- <script>
-  export let item;
-  export let keys;
-  export let updateItem;
-  export let deleteItem;
-
-  function calculateTotal(investment) {
-    return investment.price * investment.qty * investment.currency.value;
-  }
-
-  $: total = calculateTotal(item);
-</script>
-
-<div class="investment">
-  <div class="investment-info">
-    {#each keys as key}
-      <p>{key}: {item[key]}</p>
-    {/each}
-    <p>total: {total.toLocaleString()}</p>
-  </div>
-  <div class="investment-actions">
-    <button type="button" on:click={() => updateItem(item)}>Editar</button>
-    <button type="button" class="delete" on:click={() => deleteItem(item._id)}
-      >Eliminar</button
-    >
-  </div>
-</div>
-
-<style>
-  .investment {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    background-color: var(--color3);
-    border-radius: 8px;
-    padding: 10px;
-  }
-
-  .investment-info {
-    display: flex;
-    gap: 1rem;
-    flex: 1;
-  }
-
-  p {
-    flex: 1;
-  }
-
-  .investment-actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-  }
-</style> -->
-
 <script>
   //components
   import Text from "../Text.svelte";
@@ -72,8 +16,8 @@
     viewItems = !viewItems;
   }
 
-  $: total =
-    calculateTotalInvestment(investment, $currencyData) * investment.multiplier;
+  $: subtotal = calculateTotalInvestment(investment, $currencyData);
+  $: total = subtotal * investment.multiplier;
 </script>
 
 <div class="item-container">
@@ -106,12 +50,20 @@
     </div>
   </div>
   {#if viewItems}
-    <SubelementList
-      subelements={investment.subelements}
-      readonly={false}
-      updateSubelement={null}
-      deleteSubelement={null}
-    />
+    <div class="item-container subelements-info">
+      <SubelementList
+        subelements={investment.subelements}
+        readonly={false}
+        updateSubelement={null}
+        deleteSubelement={null}
+      />
+      <div class="item-subtotal">
+        {#each new Array(4).fill(0) as x}
+          <Text label="" value={""} />
+        {/each}
+        <Text label="Total parcial" value={subtotal.toLocaleString()} />
+      </div>
+    </div>
   {/if}
 </div>
 
@@ -120,6 +72,10 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+  }
+
+  .subelements-info {
+    gap: 0.25rem;
   }
 
   .investment-info {
@@ -134,5 +90,12 @@
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
+  }
+
+  .item-subtotal {
+    display: flex;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-left: 1rem;
   }
 </style>
