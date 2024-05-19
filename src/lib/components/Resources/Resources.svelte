@@ -5,6 +5,7 @@
   import Modal from "./../Modal.svelte";
   import Input from "./../Input.svelte";
   import Table from "./../Table.svelte";
+  import WarningModal from "../WarningModal.svelte";
   //store
   import {
     resourceData,
@@ -63,6 +64,7 @@
   function closeWarningModal() {
     showWarningModal = false;
   }
+
   function createResource(newResource) {
     const { value } = newResource;
     if ($totalResources + value > $totalInvestment) {
@@ -226,22 +228,12 @@
     </Modal>
   {/if}
 
-  {#if showWarningModal}
-    <Modal>
-      <div class="modal-header">
-        <h2>Advertencia</h2>
-      </div>
-      <div class="modal-content">
-        <p>
-          No se puede crear este recurso porque está superando el total de
-          inversión.
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button on:click={closeWarningModal}>Aceptar</button>
-      </div>
-    </Modal>
-  {/if}
+  <WarningModal
+    title="Advertencia"
+    message="No se puede crear este recurso porque está superando el total de inversión."
+    show={showWarningModal}
+    close={closeWarningModal}
+  />
 </div>
 
 <style>

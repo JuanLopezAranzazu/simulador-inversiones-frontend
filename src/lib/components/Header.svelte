@@ -6,6 +6,12 @@
   import Icon4 from "../assets/Icon4.svelte";
   //components
   import Navbar from "./Navbar.svelte";
+  //utils
+  import { exportData, importData } from "./../utils/data";
+  import { clickOutside } from "./../utils/event";
+  //store
+  import { currencyData, investmentData, resourceData } from "./../store/store";
+  import WarningModal from "./WarningModal.svelte";
 
   const links = [
     { text: "Inversión", url: "/", component: Icon },
@@ -13,16 +19,91 @@
     { text: "Flujo de caja", url: "/", component: Icon3 },
     { text: "Escenarios Combinados", url: "/", component: Icon4 },
   ];
+
+  const data = {
+    currencies: $currencyData,
+    investments: $investmentData,
+    resources: $resourceData,
+  };
+
+  let fileInput;
+  let showOptions = false;
+  let showWarningModal = false;
+  const style = "background-color: var(--color2); color: white;";
+
+  function openWarningModal() {
+    showWarningModal = true;
+  }
+
+  function closeWarningModal() {
+    showWarningModal = false;
+  }
+
+  function toggleOptions(event) {
+    showOptions = !showOptions;
+    event.stopPropagation();
+  }
+
+  async function handleImportClick() {
+    fileInput.click();
+  }
+
+  function handleExportClick() {
+    exportData(data);
+  }
+
+  async function handleFileChange(event) {
+    try {
+      const payload = await importData(event);
+      console.log(payload);
+      currencyData.set(payload.currencies);
+      investmentData.set(payload.investments);
+      resourceData.set(payload.resources);
+    } catch (error) {
+      console.error(error);
+      openWarningModal();
+    }
+  }
 </script>
 
 <header>
   <div class="header-content">
+    <button type="button" {style} on:click={toggleOptions}>Datos</button>
     <div class="header-elements">
       <h2>Investment Simulator</h2>
     </div>
     <Navbar {links} />
+
+    {#if showOptions}
+      <div class="options-data" use:clickOutside={() => (showOptions = false)}>
+        <div class="options-data-content">
+          <div class="title">
+            <h2>Importar/Exportar datos</h2>
+          </div>
+          <input
+            type="file"
+            bind:this={fileInput}
+            on:change={handleFileChange}
+            style="display: none;"
+          />
+          <button type="button" {style} on:click={handleImportClick}
+            >Importar datos</button
+          >
+          <button type="button" {style} on:click={handleExportClick}
+            >Exportar datos</button
+          >
+        </div>
+      </div>
+    {/if}
   </div>
 </header>
+
+<WarningModal
+  title="Advertencia"
+  message="Error al importar el archivo."
+  show={showWarningModal}
+  close={closeWarningModal}
+/>
 
 <style>
   header {
@@ -49,5 +130,26 @@
     display: flex;
     align-items: center;
     gap: 20px;
+  }
+
+  .options-data {
+    position: absolute;
+    top: 100%;
+    margin-top: 0.25rem;
+    padding: 1rem;
+    background-color: var(--color1);
+    color: #fff;
+    border-radius: 8px;
+  }
+
+  .options-data-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .title {
+    display: flex;
+    justify-content: center;
   }
 </style>

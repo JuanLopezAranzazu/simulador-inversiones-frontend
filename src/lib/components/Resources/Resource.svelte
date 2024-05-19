@@ -1,6 +1,7 @@
 <script>
   //components
   import Text from "./../Text.svelte";
+  import WarningModal from "../WarningModal.svelte";
   //store
   import { totalInvestment } from "../../store/store";
   //utils
@@ -9,6 +10,16 @@
   export let updateResource;
   export let deleteResource;
   export let seeResource;
+
+  let showWarningModal = false;
+
+  function openWarningModal() {
+    showWarningModal = true;
+  }
+
+  function closeWarningModal() {
+    showWarningModal = false;
+  }
 
   $: periods = data[resource.periodicity];
   $: nominalRate = calculateNominalRate(resource.rate, periods) * 100;
@@ -44,13 +55,20 @@
     <button type="button" on:click={() => updateResource(resource)}
       >Editar</button
     >
-    <button
-      type="button"
-      class="delete"
-      on:click={() => deleteResource(resource._id)}>Eliminar</button
+    <button type="button" class="delete" on:click={openWarningModal}
+      >Eliminar</button
     >
   </div>
 </div>
+
+<WarningModal
+  title="Advertencia"
+  message="Estas seguro que deseas eliminar el recurso?"
+  show={showWarningModal}
+  close={closeWarningModal}
+  confirm={() => deleteResource(resource._id)}
+  state={true}
+/>
 
 <style>
   .resource-info {

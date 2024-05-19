@@ -1,4 +1,5 @@
 <script>
+  import { onDestroy } from "svelte";
   //store
   import { currencyData } from "./../../store/store";
 
@@ -7,8 +8,15 @@
       .value;
   }
 
-  let value1 = findCurrency("USD");
-  let value2 = findCurrency("EUR");
+  let value1;
+  let value2;
+
+  const unsubscribe = currencyData.subscribe((data) => {
+    value1 = findCurrency("USD");
+    value2 = findCurrency("EUR");
+  });
+
+  onDestroy(unsubscribe);
 
   function updateCurrency() {
     currencyData.update((data) => {

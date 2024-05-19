@@ -2,6 +2,7 @@
   //components
   import Text from "../Text.svelte";
   import SubelementList from "./../ManageInvestment/SubelementList.svelte";
+  import WarningModal from "../WarningModal.svelte";
   //stores
   import { currencyData } from "./../../store/store";
   //utils
@@ -11,6 +12,15 @@
   export let deleteInvestment;
 
   let viewItems = false;
+  let showWarningModal = false;
+
+  function openWarningModal() {
+    showWarningModal = true;
+  }
+
+  function closeWarningModal() {
+    showWarningModal = false;
+  }
 
   function seeInvestment() {
     viewItems = !viewItems;
@@ -42,10 +52,8 @@
       <button type="button" on:click={() => updateInvestment(investment)}
         >Editar</button
       >
-      <button
-        type="button"
-        class="delete"
-        on:click={() => deleteInvestment(investment._id)}>Eliminar</button
+      <button type="button" class="delete" on:click={openWarningModal}>
+        Eliminar</button
       >
     </div>
   </div>
@@ -60,6 +68,15 @@
     </div>
   {/if}
 </div>
+
+<WarningModal
+  title="Advertencia"
+  message="Estas seguro que deseas eliminar la inversión?"
+  show={showWarningModal}
+  close={closeWarningModal}
+  confirm={() => deleteInvestment(investment._id)}
+  state={true}
+/>
 
 <style>
   .item-container {
