@@ -65,7 +65,6 @@
   }
   function createResource(newResource) {
     const { value } = newResource;
-    console.log($totalResources, value, $totalInvestment);
     if ($totalResources + value > $totalInvestment) {
       openWarningModal();
       return;
@@ -76,7 +75,6 @@
 
   function updateResource(updatedResource) {
     const { value } = updatedResource;
-    console.log($totalResources, value, $totalInvestment);
     const resource = $resourceData.find(
       (resource) => resource._id === selectedResource._id
     );

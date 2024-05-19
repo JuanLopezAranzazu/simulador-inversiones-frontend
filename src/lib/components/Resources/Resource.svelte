@@ -13,7 +13,7 @@
   $: periods = data[resource.periodicity];
   $: nominalRate = calculateNominalRate(resource.rate, periods) * 100;
   $: CPPC = (nominalRate * resource.value) / $totalInvestment;
-  $: p = (resource.value * 100) / $totalInvestment;
+  $: participation = (resource.value * 100) / $totalInvestment;
 </script>
 
 <div class="item">
@@ -33,7 +33,7 @@
     </div>
     <div class="resource-info-col">
       <Text label="Tipo de recurso" value={resource.type} />
-      <Text label="Participación" value={`${p.toFixed(2)}%`} />
+      <Text label="Participación" value={`${participation.toFixed(2)}%`} />
       <Text label="CPPC" value={`${CPPC.toFixed(2)}%`} />
     </div>
   </div>

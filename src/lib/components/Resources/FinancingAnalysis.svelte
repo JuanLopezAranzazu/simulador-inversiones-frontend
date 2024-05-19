@@ -22,17 +22,20 @@
   }
 
   let elements = [];
-  let totalP = 0;
+  let totalParticipation = 0;
   let finalTotalCPPC = 0;
   const types = ["Propio", "Externo"];
 
   $: {
     elements = [];
+    totalParticipation = 0;
+    finalTotalCPPC = 0;
     for (let i = 0; i < types.length; i++) {
       const description = "Recurso " + types[i];
       const value =
         types[i] === "Propio" ? $totalResourceByType1 : $totalResourceByType2;
-      const p = $totalInvestment && (value * 100) / $totalInvestment;
+      const participation =
+        $totalInvestment && (value * 100) / $totalInvestment;
       const totalCPPC = $resourceData.reduce((total, resource) => {
         if (resource.type === types[i]) {
           const periods = data[resource.periodicity];
@@ -43,19 +46,19 @@
         }
         return total;
       }, 0);
-      totalP += p;
+      totalParticipation += participation;
       finalTotalCPPC += totalCPPC;
       elements.push([
         description,
         `${value.toLocaleString()}$`,
-        `${p.toFixed(2)}%`,
+        `${participation.toFixed(2)}%`,
         `${totalCPPC.toFixed(2)}%`,
       ]);
     }
     elements.push([
       "Total",
       `${($totalResourceByType1 + $totalResourceByType2).toLocaleString()}$`,
-      `${totalP.toFixed(2)}%`,
+      `${totalParticipation.toFixed(2)}%`,
       `${finalTotalCPPC.toFixed(2)}%`,
     ]);
   }

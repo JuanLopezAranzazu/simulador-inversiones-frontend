@@ -16,8 +16,8 @@
     viewItems = !viewItems;
   }
 
-  $: subtotal = calculateTotalInvestment(investment, $currencyData);
-  $: total = subtotal * investment.multiplier;
+  $: total =
+    calculateTotalInvestment(investment, $currencyData) * investment.multiplier;
 </script>
 
 <div class="item-container">
@@ -57,12 +57,6 @@
         updateSubelement={null}
         deleteSubelement={null}
       />
-      <div class="item-subtotal">
-        {#each new Array(4).fill(0) as x}
-          <Text label="" value={""} />
-        {/each}
-        <Text label="Total parcial" value={subtotal.toLocaleString()} />
-      </div>
     </div>
   {/if}
 </div>
@@ -90,12 +84,5 @@
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
-  }
-
-  .item-subtotal {
-    display: flex;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-left: 1rem;
   }
 </style>

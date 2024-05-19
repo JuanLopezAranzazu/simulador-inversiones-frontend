@@ -171,13 +171,6 @@
     </div>
     <div class="subelements">
       <div class="save-data">
-        <p>
-          Total parcial:
-          {calculateTotalInvestment(
-            { subelements: $subelements },
-            $currencyData
-          ).toLocaleString()}$
-        </p>
         <button
           type="button"
           on:click={() => {
@@ -253,7 +246,7 @@
 
   .save-data {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     gap: 1rem;
   }

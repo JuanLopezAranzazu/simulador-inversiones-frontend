@@ -1,16 +1,35 @@
 <script>
   //components
   import Investment from "./Investment.svelte";
+  import Search from "../Search.svelte";
+  //utils
+  import { searchItems } from "./../../utils/search";
   export let investments = [];
   export let updateInvestment;
   export let deleteInvestment;
+
+  let search = "";
+  let filteredInvestments = investments;
+
+  $: {
+    if (search === "") {
+      filteredInvestments = investments;
+    } else {
+      filteredInvestments = searchItems(investments, search);
+    }
+  }
+
+  const handleSearch = (query) => {
+    search = query;
+  };
 </script>
 
 <div class="investment-list">
-  <div class="title">
-    <p>Lista de inversiones</p>
+  <div class="investment-list-header">
+    <span>Lista de inversiones</span>
+    <Search onSearch={handleSearch} />
   </div>
-  {#each investments as investment}
+  {#each filteredInvestments as investment}
     <Investment {investment} {updateInvestment} {deleteInvestment} />
   {/each}
 </div>
@@ -22,8 +41,13 @@
     gap: 1rem;
   }
 
-  .title {
+  .investment-list-header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color1);
+    padding: 1rem;
+    border-radius: 8px;
+    color: #fff;
   }
 </style>
