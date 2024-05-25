@@ -1,31 +1,49 @@
 <script>
-  //components
-  import ModuleLayout from "../lib/components/ModuleLayout.svelte";
-  import Currencies from "../lib/components/Currencies/Currencies.svelte";
-  import Investments from "../lib/components/Investments/Investments.svelte";
-  import InvestmentDetails from "../lib/components/Investments/InvestmentDetails.svelte";
+  import "./../style/global.css";
+  import { goto } from "$app/navigation";
+  const style = "background-color: var(--color2); color: white;";
 </script>
 
-<ModuleLayout>
-  <div class="investment-module">
-    <div class="investment-module-section">
-      <Currencies />
-      <InvestmentDetails />
-    </div>
-    <Investments />
+<div class="container">
+  <div class="section content-left">
+    <h1>Investment Simulator</h1>
+    <p>Maximiza tu potencial financiero con nuestra plataforma</p>
+    <p>¡Invierte con inteligencia, invierte con nosotros!</p>
   </div>
-</ModuleLayout>
+  <div class="section">
+    <h1>¡Bienvenido!</h1>
+    <p>Inicia tu proyecto ahora</p>
+    <button type="button" {style} on:click={() => goto("/investment")}
+      >Iniciar proyecto</button
+    >
+  </div>
+</div>
 
 <style>
-  .investment-module {
+  .container {
     display: grid;
-    grid-template-columns: 1fr 3fr;
-    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
   }
 
-  .investment-module-section {
+  .content-left h1 {
+    color: var(--color2);
+  }
+
+  .section {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .content-left {
+    background: linear-gradient(
+      180deg,
+      rgba(20, 33, 61, 1) 0%,
+      rgba(37, 62, 115, 1) 52%,
+      rgba(55, 93, 175, 1) 100%
+    );
+    color: white;
   }
 </style>

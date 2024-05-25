@@ -1,11 +1,16 @@
 <script>
   import { onDestroy } from "svelte";
+  import { SvelteEasyToast, toast } from "svelte-easy-toast";
   //store
   import { currencyData } from "./../../store/store";
 
   function findCurrency(currencyName) {
-    return $currencyData.find((currency) => currency.name === currencyName)
-      .value;
+    try {
+      return $currencyData.find((currency) => currency.name === currencyName)
+        .value;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   let value1;
@@ -19,17 +24,28 @@
   onDestroy(unsubscribe);
 
   function updateCurrency() {
-    currencyData.update((data) => {
-      const updatedData = data.map((currency) => {
-        if (currency.name === "USD") {
-          return { ...currency, value: value1 };
-        } else if (currency.name === "EUR") {
-          return { ...currency, value: value2 };
-        }
-        return currency;
+    try {
+      currencyData.update((data) => {
+        const updatedData = data.map((currency) => {
+          if (currency.name === "USD") {
+            return { ...currency, value: value1 };
+          } else if (currency.name === "EUR") {
+            return { ...currency, value: value2 };
+          }
+          return currency;
+        });
+        return updatedData;
       });
-      return updatedData;
-    });
+      toast({
+        type: "success",
+        position: "bottom-right",
+        text: "Se han actualizado los datos correctamente!",
+        title: "Datos actualizados!",
+        delay: 3000,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 </script>
 
@@ -37,16 +53,18 @@
   <h2>Monedas</h2>
   <div class="currency">
     <p>USD</p>
-    <input type="number" bind:value={value1} />
+    <input type="number" bind:value={value1} placeholder="Valor USD" />
   </div>
   <div class="currency">
     <p>EUR</p>
-    <input type="number" bind:value={value2} />
+    <input type="number" bind:value={value2} placeholder="Valor EUR" />
   </div>
   <div class="save-data">
     <button type="button" on:click={() => updateCurrency()}>Guardar</button>
   </div>
 </div>
+
+<SvelteEasyToast />
 
 <style>
   .currencies {

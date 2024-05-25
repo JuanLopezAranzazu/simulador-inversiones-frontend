@@ -39,7 +39,9 @@
     </div>
     <div class="resource-info-col">
       <Text label="Periodicidad" value={resource.periodicity} />
-      <Text label="Plazo" value={resource.term} />
+      {#if resource.type === "Externo"}
+        <Text label="Plazo" value={resource.term} />
+      {/if}
       <Text label="Tasa nominal anual" value={`${nominalRate.toFixed(2)}%`} />
     </div>
     <div class="resource-info-col">

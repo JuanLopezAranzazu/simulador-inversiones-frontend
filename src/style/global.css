@@ -51,3 +51,15 @@ button.delete {
   background-color: var(--color1);
   color: #fff;
 }
+
+a {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  color: var(--color2);
+}

@@ -14,7 +14,7 @@
   import WarningModal from "./WarningModal.svelte";
 
   const links = [
-    { text: "Inversión", url: "/", component: Icon },
+    { text: "Inversión", url: "/investment", component: Icon },
     { text: "Financiación", url: "/financing", component: Icon2 },
     { text: "Flujo de caja", url: "/", component: Icon3 },
     { text: "Escenarios Combinados", url: "/", component: Icon4 },
@@ -70,7 +70,7 @@
   <div class="header-content">
     <button type="button" {style} on:click={toggleOptions}>Datos</button>
     <div class="header-elements">
-      <h2>Investment Simulator</h2>
+      <a href="/"><h2>Investment Simulator</h2></a>
     </div>
     <Navbar {links} />
 

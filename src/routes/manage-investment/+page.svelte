@@ -2,6 +2,7 @@
   import { goto } from "$app/navigation";
   import { v4 as uuidv4 } from "uuid";
   import { writable } from "svelte/store";
+  import { SvelteEasyToast, toast } from "svelte-easy-toast";
   //components
   import ModuleLayout from "../../lib/components/ModuleLayout.svelte";
   import SubelementList from "../../lib/components/ManageInvestment/SubelementList.svelte";
@@ -11,17 +12,20 @@
     investmentData,
     selectedInvestment,
   } from "./../../lib/store/store";
-  import { calculateTotalInvestment } from "../../lib/utils/calculate";
 
   const types = ["Fija", "Variable"];
 
-  if (
-    $selectedInvestment !== null &&
-    !$investmentData.some(
-      (investment) => investment._id === $selectedInvestment._id
-    )
-  ) {
-    selectedInvestment.update((data) => (data = null));
+  try {
+    if (
+      $selectedInvestment !== null &&
+      !$investmentData.some(
+        (investment) => investment._id === $selectedInvestment._id
+      )
+    ) {
+      selectedInvestment.update((data) => (data = null));
+    }
+  } catch (error) {
+    console.error(error);
   }
 
   //set initial values
@@ -46,52 +50,107 @@
   }
 
   function createElement(newElement) {
-    investmentData.update((data) => [
-      ...data,
-      { _id: uuidv4(), ...newElement },
-    ]);
-    goto("/");
+    try {
+      investmentData.update((data) => [
+        ...data,
+        { _id: uuidv4(), ...newElement },
+      ]);
+      goto("/investment");
+      toast({
+        type: "success",
+        position: "bottom-right",
+        text: "Se ha creado la cuenta principal correctamente!",
+        title: "Cuenta principal creada",
+        delay: 3000,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function updateElement(updatedElement) {
-    investmentData.update((data) =>
-      data.map((element) =>
-        element._id === $selectedInvestment._id
-          ? { ...element, ...updatedElement }
-          : element
-      )
-    );
-    goto("/");
+    try {
+      investmentData.update((data) =>
+        data.map((element) =>
+          element._id === $selectedInvestment._id
+            ? { ...element, ...updatedElement }
+            : element
+        )
+      );
+      goto("/investment");
+      toast({
+        type: "success",
+        position: "bottom-right",
+        text: "Se ha actualizado la cuenta principal correctamente!",
+        title: "Cuenta principal actualizada",
+        delay: 3000,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function createSubelement(newSubelement) {
-    subelements.update((data) => [
-      ...data,
-      { _id: uuidv4(), ...newSubelement },
-    ]);
-    resetFields();
+    try {
+      subelements.update((data) => [
+        ...data,
+        { _id: uuidv4(), ...newSubelement },
+      ]);
+      resetFields();
+      toast({
+        type: "success",
+        position: "bottom-right",
+        text: "Se ha creado la subcuenta correctamente!",
+        title: "Subcuenta creada",
+        delay: 3000,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function updateSubelement(updatedSubelement) {
-    subelements.update((data) =>
-      data.map((subelement) =>
-        subelement._id === selectedSubelement._id
-          ? { ...subelement, ...updatedSubelement }
-          : subelement
-      )
-    );
-    selectedSubelement = null;
-    resetFields();
+    try {
+      subelements.update((data) =>
+        data.map((subelement) =>
+          subelement._id === selectedSubelement._id
+            ? { ...subelement, ...updatedSubelement }
+            : subelement
+        )
+      );
+      selectedSubelement = null;
+      resetFields();
+      toast({
+        type: "success",
+        position: "bottom-right",
+        text: "Se ha actualizado la subcuenta correctamente!",
+        title: "Subcuenta actualizada",
+        delay: 3000,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function deleteSubelement(subelementId) {
-    if ($subelements.some((subelement) => subelement._id === subelementId)) {
-      subelements.update((data) =>
-        data.filter((subelement) => subelement._id !== subelementId)
-      );
+    try {
+      if ($subelements.some((subelement) => subelement._id === subelementId)) {
+        subelements.update((data) =>
+          data.filter((subelement) => subelement._id !== subelementId)
+        );
+        toast({
+          type: "success",
+          position: "bottom-right",
+          text: "Se ha eliminado la subcuenta correctamente!",
+          title: "Subcuenta eliminada",
+          delay: 3000,
+        });
+      }
+      selectedSubelement = null;
+      resetFields();
+    } catch (error) {
+      console.error(error);
     }
-    selectedSubelement = null;
-    resetFields();
   }
 </script>
 
@@ -202,6 +261,8 @@
     </div>
   </div>
 </ModuleLayout>
+
+<SvelteEasyToast />
 
 <style>
   .add-investment-module {

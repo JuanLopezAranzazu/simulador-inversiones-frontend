@@ -1,5 +1,6 @@
 <script>
   import { goto } from "$app/navigation";
+  import { SvelteEasyToast, toast } from "svelte-easy-toast";
   //components
   import InvestmentList from "./InvestmentList.svelte";
   //store
@@ -9,9 +10,20 @@
   let selectedType = "";
 
   function deleteInvestment(investmentId) {
-    investmentData.update((data) =>
-      data.filter((investment) => investment._id !== investmentId)
-    );
+    try {
+      investmentData.update((data) =>
+        data.filter((investment) => investment._id !== investmentId)
+      );
+      toast({
+        type: "success",
+        position: "bottom-right",
+        text: "Se ha eliminado la inversión correctamente!",
+        title: "Inversión eliminada",
+        delay: 3000,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   $: filteredElements =
@@ -68,6 +80,8 @@
     {deleteInvestment}
   />
 </div>
+
+<SvelteEasyToast />
 
 <style>
   .investments {

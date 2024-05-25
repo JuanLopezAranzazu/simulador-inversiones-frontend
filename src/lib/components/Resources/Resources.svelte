@@ -1,5 +1,6 @@
 <script>
   import { v4 as uuidv4 } from "uuid";
+  import { SvelteEasyToast, toast } from "svelte-easy-toast";
   //components
   import ResourceList from "./ResourceList.svelte";
   import Modal from "./../Modal.svelte";
@@ -66,39 +67,75 @@
   }
 
   function createResource(newResource) {
-    const { value } = newResource;
-    if ($totalResources + value > $totalInvestment) {
-      openWarningModal();
-      return;
+    try {
+      const { value } = newResource;
+      if ($totalResources + value > $totalInvestment) {
+        openWarningModal();
+        return;
+      }
+      resourceData.update((data) => [
+        ...data,
+        { _id: uuidv4(), ...newResource },
+      ]);
+      closeModal();
+      toast({
+        type: "success",
+        position: "bottom-right",
+        text: "Se ha creado el recurso correctamente!",
+        title: "Recurso creado",
+        delay: 3000,
+      });
+    } catch (error) {
+      console.error(error);
     }
-    resourceData.update((data) => [...data, { _id: uuidv4(), ...newResource }]);
-    closeModal();
   }
 
   function updateResource(updatedResource) {
-    const { value } = updatedResource;
-    const resource = $resourceData.find(
-      (resource) => resource._id === selectedResource._id
-    );
-    const oldValue = resource.value;
-    if ($totalResources - oldValue + value > $totalInvestment) {
-      openWarningModal();
-      return;
+    try {
+      const { value } = updatedResource;
+      const resource = $resourceData.find(
+        (resource) => resource._id === selectedResource._id
+      );
+      const oldValue = resource.value;
+      if ($totalResources - oldValue + value > $totalInvestment) {
+        openWarningModal();
+        return;
+      }
+      resourceData.update((data) =>
+        data.map((resource) =>
+          resource._id === selectedResource._id
+            ? { ...resource, ...updatedResource }
+            : resource
+        )
+      );
+      closeModal();
+      toast({
+        type: "success",
+        position: "bottom-right",
+        text: "Se ha actualizado el recurso correctamente!",
+        title: "Recurso actualizado",
+        delay: 3000,
+      });
+    } catch (error) {
+      console.error(error);
     }
-    resourceData.update((data) =>
-      data.map((resource) =>
-        resource._id === selectedResource._id
-          ? { ...resource, ...updatedResource }
-          : resource
-      )
-    );
-    closeModal();
   }
 
   function deleteResource(resourceId) {
-    resourceData.update((data) =>
-      data.filter((resource) => resource._id !== resourceId)
-    );
+    try {
+      resourceData.update((data) =>
+        data.filter((resource) => resource._id !== resourceId)
+      );
+      toast({
+        type: "success",
+        position: "bottom-right",
+        text: "Se ha eliminado el recurso correctamente!",
+        title: "Recurso eliminado",
+        delay: 3000,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   $: filteredElements =
@@ -176,7 +213,7 @@
           bind:value={rate}
           placeholder="Tasa efectiva anual"
         />
-        <input type="number" bind:value={term} placeholder="Plazo en meses" />
+
         <select bind:value={periodicity}>
           {#each keys as k}
             <option value={k}>{k}</option>
@@ -187,6 +224,9 @@
             <option value={t}>{t}</option>
           {/each}
         </select>
+        {#if type === "Externo"}
+          <input type="number" bind:value={term} placeholder="Plazo en meses" />
+        {/if}
       </div>
       <div class="modal-footer">
         <button on:click={closeModal}>Cancelar</button>
@@ -235,6 +275,8 @@
     close={closeWarningModal}
   />
 </div>
+
+<SvelteEasyToast />
 
 <style>
   .resources {
