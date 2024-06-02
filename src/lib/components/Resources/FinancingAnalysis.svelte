@@ -5,6 +5,7 @@
   import { calculateNominalRate, data } from "./../../utils/calculate";
   //store
   import {
+    financingOptionsData,
     resourceData,
     totalInvestment,
     totalResourceByType1,
@@ -25,6 +26,7 @@
   let totalParticipation = 0;
   let finalTotalCPPC = 0;
   const types = ["Propio", "Externo"];
+  const periods = data[$financingOptionsData.periodicity];
 
   $: {
     elements = [];
@@ -38,7 +40,6 @@
         $totalInvestment && (value * 100) / $totalInvestment;
       const totalCPPC = $resourceData.reduce((total, resource) => {
         if (resource.type === types[i]) {
-          const periods = data[resource.periodicity];
           const nominalRate = calculateNominalRate(resource.rate, periods);
           const CPPC =
             (nominalRate * (resource.value * 100)) / $totalInvestment;

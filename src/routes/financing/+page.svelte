@@ -3,15 +3,15 @@
   import ModuleLayout from "../../lib/components/ModuleLayout.svelte";
   import Resources from "../../lib/components/Resources/Resources.svelte";
   import ResourceDetails from "../../lib/components/Resources/ResourceDetails.svelte";
-  import InvestmentDetails from "../../lib/components/Investments/InvestmentDetails.svelte";
   import FinancingAnalysis from "../../lib/components/Resources/FinancingAnalysis.svelte";
+  import FinancingOptions from "../../lib/components/Resources/FinancingOptions.svelte";
 </script>
 
 <ModuleLayout>
   <div class="resource-module">
     <div class="resource-module-section">
-      <InvestmentDetails />
       <ResourceDetails />
+      <FinancingOptions />
       <FinancingAnalysis />
     </div>
     <Resources />

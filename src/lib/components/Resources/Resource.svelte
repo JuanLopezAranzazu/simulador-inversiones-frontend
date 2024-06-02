@@ -3,7 +3,7 @@
   import Text from "./../Text.svelte";
   import WarningModal from "../WarningModal.svelte";
   //store
-  import { totalInvestment } from "../../store/store";
+  import { totalInvestment, financingOptionsData } from "../../store/store";
   //utils
   import { data, calculateNominalRate } from "./../../utils/calculate";
   export let resource;
@@ -21,7 +21,7 @@
     showWarningModal = false;
   }
 
-  $: periods = data[resource.periodicity];
+  $: periods = data[$financingOptionsData.periodicity];
   $: nominalRate = calculateNominalRate(resource.rate, periods) * 100;
   $: CPPC = (nominalRate * resource.value) / $totalInvestment;
   $: participation = (resource.value * 100) / $totalInvestment;
@@ -31,23 +31,21 @@
   <div class="resource-info">
     <div class="resource-info-col">
       <Text label="Descripción" value={resource.description} />
+      <Text label="Participación" value={`${participation.toFixed(2)}%`} />
+    </div>
+    <div class="resource-info-col">
       <Text label="Capital" value={`${resource.value.toLocaleString()}$`} />
+      <Text label="CPPC" value={`${CPPC.toFixed(2)}%`} />
+    </div>
+    <div class="resource-info-col">
       <Text
         label="Tasa efectiva anual"
         value={`${resource.rate.toFixed(2)}%`}
       />
-    </div>
-    <div class="resource-info-col">
-      <Text label="Periodicidad" value={resource.periodicity} />
-      {#if resource.type === "Externo"}
-        <Text label="Plazo" value={resource.term} />
-      {/if}
       <Text label="Tasa nominal anual" value={`${nominalRate.toFixed(2)}%`} />
     </div>
     <div class="resource-info-col">
       <Text label="Tipo de recurso" value={resource.type} />
-      <Text label="Participación" value={`${participation.toFixed(2)}%`} />
-      <Text label="CPPC" value={`${CPPC.toFixed(2)}%`} />
     </div>
   </div>
   <div class="resource-actions">

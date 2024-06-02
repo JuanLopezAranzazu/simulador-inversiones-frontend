@@ -4,7 +4,10 @@ import { writable, derived } from "svelte/store";
 import {
   calculateTotalInvestmentByType,
   calculateTotalResourceByType,
+  data,
 } from "./../utils/calculate";
+
+const keys = Object.keys(data);
 
 function persist(key, value) {
   const isLocalStorageAvailable = typeof localStorage !== "undefined";
@@ -44,6 +47,16 @@ export const currencyData = persist("currency-data", [
 export const investmentData = persist("investment-data", []);
 export const resourceData = persist("resource-data", []);
 export const selectedInvestment = persist("selected-investment", null);
+export const cashFlowData = persist("cash-flow-data", []);
+export const growthFactorData = persist("growth-factor-data", {
+  units: 1,
+  prices: 1,
+  costs: 1,
+});
+export const financingOptionsData = persist("financing-options-data", {
+  term: 1,
+  periodicity: keys[0],
+});
 
 // derived stores
 export const totalInvestment = derived(

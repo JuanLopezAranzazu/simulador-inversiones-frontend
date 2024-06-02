@@ -10,13 +10,20 @@
   import { exportData, importData } from "./../utils/data";
   import { clickOutside } from "./../utils/event";
   //store
-  import { currencyData, investmentData, resourceData } from "./../store/store";
+  import {
+    currencyData,
+    investmentData,
+    resourceData,
+    cashFlowData,
+    financingOptionsData,
+    growthFactorData,
+  } from "./../store/store";
   import WarningModal from "./WarningModal.svelte";
 
   const links = [
     { text: "Inversión", url: "/investment", component: Icon },
     { text: "Financiación", url: "/financing", component: Icon2 },
-    { text: "Flujo de caja", url: "/", component: Icon3 },
+    { text: "Flujo de caja", url: "/cash-flow", component: Icon3 },
     { text: "Escenarios Combinados", url: "/", component: Icon4 },
   ];
 
@@ -24,6 +31,9 @@
     currencies: $currencyData,
     investments: $investmentData,
     resources: $resourceData,
+    cashFlows: $cashFlowData,
+    financingOptions: $financingOptionsData,
+    growthFactors: $growthFactorData,
   };
 
   let fileInput;
@@ -59,6 +69,9 @@
       currencyData.set(payload.currencies);
       investmentData.set(payload.investments);
       resourceData.set(payload.resources);
+      cashFlowData.set(payload.cashFlows);
+      financingOptionsData.set(payload.financingOptions);
+      growthFactorData.set(payload.growthFactors);
     } catch (error) {
       console.error(error);
       openWarningModal();

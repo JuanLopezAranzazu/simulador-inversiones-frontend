@@ -5,16 +5,23 @@
   import {
     totalResourceByType1,
     totalResourceByType2,
+    totalInvestmentByType1,
+    totalInvestmentByType2,
   } from "../../store/store";
 
-  $: total = $totalResourceByType1 + $totalResourceByType2;
+  $: totalResource = $totalResourceByType1 + $totalResourceByType2;
+  $: totalInvestment = $totalInvestmentByType1 + $totalInvestmentByType2;
 </script>
 
 <div class="resource-details">
   <div class="title">
     <h2>Detalles de financiación</h2>
   </div>
-  <Text label="Total recursos" value={`${total.toLocaleString()}$`} />
+  <Text
+    label="Total inversiones"
+    value={`${totalInvestment.toLocaleString()}$`}
+  />
+  <Text label="Total recursos" value={`${totalResource.toLocaleString()}$`} />
   <Text
     label="Recursos propios"
     value={`${$totalResourceByType1.toLocaleString()}$`}

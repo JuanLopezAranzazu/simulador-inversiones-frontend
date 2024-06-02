@@ -10,6 +10,7 @@ body {
   --color3: #e5e5e5;
   --color4: #193a7f;
   --color5: #e7195a;
+  --color6: #525252;
   --site-width: 1280px;
 }
 
@@ -62,4 +63,10 @@ a {
 
 a:hover {
   color: var(--color2);
+}
+
+.form-element {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }

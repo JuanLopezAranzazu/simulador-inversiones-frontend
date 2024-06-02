@@ -1,4 +1,6 @@
 <script>
+  //store
+  import { financingOptionsData } from "../store/store";
   //utils
   import {
     data,
@@ -7,23 +9,23 @@
     calculateShare,
   } from "./../utils/calculate";
   export let item;
-  let { value, rate, term, periodicity } = item;
+  let { value, rate } = item;
 
   let copyValue = value;
-  let periods;
   let nominalRate;
   let periodicRate;
   let pay;
   let share;
   let elements;
   let selectedType = "Tabla de amortización 1";
+  const periods = data[$financingOptionsData.periodicity];
+  const term = $financingOptionsData.term;
 
   $: {
-    periods = data[periodicity];
     nominalRate = calculateNominalRate(rate, periods);
     periodicRate = calculatePeriodicRate(nominalRate, periods);
     copyValue = value;
-    elements = [[0, 0, 0, 0, copyValue]];
+    elements = [[0, 0, 0, 0, Math.round(copyValue).toLocaleString()]];
 
     if (selectedType === "Tabla de amortización 1") {
       share = calculateShare(copyValue, periodicRate, term);
@@ -31,7 +33,9 @@
         const interest = copyValue * periodicRate;
         const pay = share - interest;
         copyValue -= pay;
-        const data = [i + 1, share, interest, pay, copyValue];
+        const data = [i + 1, share, interest, pay, copyValue].map((el) =>
+          Math.round(el).toLocaleString()
+        );
         elements.push(data);
       }
     } else {
@@ -39,7 +43,9 @@
       for (let i = 0; i < term; i++) {
         const interest = copyValue * periodicRate;
         copyValue -= pay;
-        const data = [i + 1, pay, interest, pay + interest, copyValue];
+        const data = [i + 1, pay, interest, pay + interest, copyValue].map(
+          (el) => Math.round(el).toLocaleString()
+        );
         elements.push(data);
       }
     }
@@ -83,7 +89,7 @@
       {#each elements as el}
         <tr>
           {#each el as data}
-            <td>{data.toLocaleString()}</td>
+            <td>{data}</td>
           {/each}
         </tr>
       {/each}

@@ -13,11 +13,8 @@
     totalInvestment,
     totalResources,
   } from "./../../store/store";
-  //utils
-  import { data } from "./../../utils/calculate";
 
   const types = ["Propio", "Externo"];
-  const keys = Object.keys(data);
 
   let showModal = false;
   let showTableModal = false;
@@ -26,8 +23,6 @@
   let description = "";
   let value = 0;
   let rate = 0;
-  let term = 0;
-  let periodicity = keys[0];
   let type = types[0];
   let filteredElements = [];
   let selectedType = "";
@@ -36,8 +31,6 @@
     description = "";
     value = 0;
     rate = 0;
-    term = 0;
-    periodicity = keys[0];
     type = types[0];
     selectedResource = null;
   }
@@ -152,7 +145,7 @@
         selectedType = "";
       }}
     >
-      Recursos Todos
+      Todos los recursos
     </button>
     <button
       class:active={selectedType === "Propio"}
@@ -188,8 +181,6 @@
       description = resource.description;
       value = resource.value;
       rate = resource.rate;
-      term = resource.term;
-      periodicity = resource.periodicity;
       type = resource.type;
       openModal();
     }}
@@ -206,49 +197,52 @@
         <h2>{selectedResource ? "Editar" : "Crear"} Recurso</h2>
       </div>
       <div class="modal-content">
-        <input type="text" bind:value={description} placeholder="Descripción" />
-        <input type="number" bind:value placeholder="Capital" />
-        <input
-          type="number"
-          bind:value={rate}
-          placeholder="Tasa efectiva anual"
-        />
-
-        <select bind:value={periodicity}>
-          {#each keys as k}
-            <option value={k}>{k}</option>
-          {/each}
-        </select>
-        <select bind:value={type}>
-          {#each types as t}
-            <option value={t}>{t}</option>
-          {/each}
-        </select>
-        {#if type === "Externo"}
-          <input type="number" bind:value={term} placeholder="Plazo en meses" />
-        {/if}
+        <div class="form-element">
+          <label for="description">Descripción</label>
+          <input
+            id="description"
+            type="text"
+            bind:value={description}
+            placeholder="Descripción"
+          />
+        </div>
+        <div class="form-element">
+          <label for="value">Capital</label>
+          <input id="value" type="number" bind:value placeholder="Capital" />
+        </div>
+        <div class="form-element">
+          <label for="rate">Tasa efectiva anual</label>
+          <input
+            id="rate"
+            type="number"
+            bind:value={rate}
+            placeholder="Tasa efectiva anual"
+          />
+        </div>
+        <div class="form-element">
+          <label for="type">Tipo de recurso</label>
+          <select id="type" bind:value={type}>
+            {#each types as t}
+              <option value={t}>{t}</option>
+            {/each}
+          </select>
+        </div>
       </div>
       <div class="modal-footer">
         <button on:click={closeModal}>Cancelar</button>
         <button
           type="button"
-          on:click={selectedResource
-            ? updateResource({
-                description,
-                value,
-                rate,
-                term,
-                periodicity,
-                type,
-              })
-            : createResource({
-                description,
-                value,
-                rate,
-                term,
-                periodicity,
-                type,
-              })}>{selectedResource ? "Editar" : "Crear"}</button
+          on:click={() => {
+            const elementData = {
+              description,
+              value,
+              rate,
+              type,
+            };
+            selectedResource
+              ? updateResource(elementData)
+              : createResource(elementData);
+          }}>{selectedResource ? "Editar" : "Crear"}</button
         >
       </div>
     </Modal>

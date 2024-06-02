@@ -51,13 +51,25 @@
 
 <div class="currencies">
   <h2>Monedas</h2>
-  <div class="currency">
-    <p>USD</p>
-    <input type="number" bind:value={value1} placeholder="Valor USD" />
+  <div class="form-element">
+    <label for="usd">USD</label>
+    <input
+      id="usd"
+      type="number"
+      bind:value={value1}
+      placeholder="Valor USD"
+      min="0"
+    />
   </div>
-  <div class="currency">
-    <p>EUR</p>
-    <input type="number" bind:value={value2} placeholder="Valor EUR" />
+  <div class="form-element">
+    <label for="eur">EUR</label>
+    <input
+      id="eur"
+      type="number"
+      bind:value={value2}
+      placeholder="Valor EUR"
+      min="0"
+    />
   </div>
   <div class="save-data">
     <button type="button" on:click={() => updateCurrency()}>Guardar</button>
@@ -81,10 +93,5 @@
   .save-data {
     display: flex;
     justify-content: center;
-  }
-
-  .currency {
-    display: flex;
-    flex-direction: column;
   }
 </style>

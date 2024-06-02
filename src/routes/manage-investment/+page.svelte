@@ -164,22 +164,33 @@
           </h2>
         </div>
         <div class="form-content">
-          <input
-            type="text"
-            bind:value={description}
-            placeholder="Descripción"
-          />
-          <select bind:value={type}>
-            {#each types as t}
-              <option value={t}>{t}</option>
-            {/each}
-          </select>
-          {#if type === "Variable"}
+          <div class="form-element">
+            <label for="description">Descripción</label>
             <input
-              type="number"
-              bind:value={multiplier}
-              placeholder="Tiempo del proyecto"
+              id="description"
+              type="text"
+              bind:value={description}
+              placeholder="Descripción"
             />
+          </div>
+          <div class="form-element">
+            <label for="type">Tipo</label>
+            <select bind:value={type}>
+              {#each types as t}
+                <option value={t}>{t}</option>
+              {/each}
+            </select>
+          </div>
+          {#if type === "Variable"}
+            <div class="form-element">
+              <label for="multiplier">Tiempo del proyecto</label>
+              <input
+                id="multiplier"
+                type="number"
+                bind:value={multiplier}
+                placeholder="Tiempo del proyecto"
+              />
+            </div>
           {/if}
         </div>
       </div>
@@ -188,18 +199,41 @@
           <h2>{selectedSubelement ? "Editar" : "Crear"} Subcuenta</h2>
         </div>
         <div class="form-content">
-          <input
-            type="text"
-            bind:value={descriptionSubelement}
-            placeholder="Descripción"
-          />
-          <input type="number" bind:value={price} placeholder="Precio" />
-          <input type="number" bind:value={qty} placeholder="Cantidad" />
-          <select bind:value={currency}>
-            {#each $currencyData as c}
-              <option value={c._id}>{c.name}</option>
-            {/each}
-          </select>
+          <div class="form-element">
+            <label for="descriptionSubelement">Descripción</label>
+            <input
+              id="descriptionSubelement"
+              type="text"
+              bind:value={descriptionSubelement}
+              placeholder="Descripción"
+            />
+          </div>
+          <div class="form-element">
+            <label for="price">Precio</label>
+            <input
+              id="price"
+              type="number"
+              bind:value={price}
+              placeholder="Precio"
+            />
+          </div>
+          <div class="form-element">
+            <label for="qty">Cantidad</label>
+            <input
+              id="qty"
+              type="number"
+              bind:value={qty}
+              placeholder="Cantidad"
+            />
+          </div>
+          <div class="form-element">
+            <label for="currency">Moneda</label>
+            <select id="currency" bind:value={currency}>
+              {#each $currencyData as c}
+                <option value={c._id}>{c.name}</option>
+              {/each}
+            </select>
+          </div>
         </div>
         <div class="form-footer">
           <button
