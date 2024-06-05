@@ -17,6 +17,7 @@
     cashFlowData,
     financingOptionsData,
     growthFactorData,
+    cashFlowOptionsData,
   } from "./../store/store";
   import WarningModal from "./WarningModal.svelte";
 
@@ -34,6 +35,7 @@
     cashFlows: $cashFlowData,
     financingOptions: $financingOptionsData,
     growthFactors: $growthFactorData,
+    cashFlowOptions: $cashFlowOptionsData,
   };
 
   let fileInput;
@@ -72,6 +74,7 @@
       cashFlowData.set(payload.cashFlows);
       financingOptionsData.set(payload.financingOptions);
       growthFactorData.set(payload.growthFactors);
+      cashFlowOptionsData.set(payload.cashFlowOptions);
     } catch (error) {
       console.error(error);
       openWarningModal();
