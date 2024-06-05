@@ -57,6 +57,10 @@ export const financingOptionsData = persist("financing-options-data", {
   term: 1,
   periodicity: keys[0],
 });
+export const cashFlowOptionsData = persist("cash-flow-options-data", {
+  amortization: 1,
+  taxProvision: 1,
+});
 
 // derived stores
 export const totalInvestment = derived(

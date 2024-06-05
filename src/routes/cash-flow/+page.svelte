@@ -4,12 +4,14 @@
   import Flows from "../../lib/components/CashFlow/Flows.svelte";
   import CashFlowAnalysis from "../../lib/components/CashFlow/CashFlowAnalysis.svelte";
   import GrowthFactor from "../../lib/components/CashFlow/GrowthFactor.svelte";
+  import CashFlowOptions from "../../lib/components/CashFlow/CashFlowOptions.svelte";
 </script>
 
 <ModuleLayout>
   <div class="cash-flow-module">
     <div class="cash-flow-module-section">
       <GrowthFactor />
+      <CashFlowOptions />
       <CashFlowAnalysis />
     </div>
     <Flows />

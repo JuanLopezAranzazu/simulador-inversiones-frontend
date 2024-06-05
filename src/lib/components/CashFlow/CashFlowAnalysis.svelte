@@ -3,14 +3,48 @@
   import Modal from "../Modal.svelte";
   import YearAnalysis from "./YearAnalysis.svelte";
   //store
-  import { financingOptionsData } from "./../../store/store";
+  import { financingOptionsData, resourceData } from "./../../store/store";
   //utils
-  import { data } from "./../../utils/calculate";
+  import {
+    calculateShare,
+    calculateNominalRate,
+    calculatePeriodicRate,
+    data,
+  } from "./../../utils/calculate";
 
   let showModal = false;
   let selectedYear = 1;
   const periods = data[$financingOptionsData.periodicity]; // periodos para analizar
   const years = Math.floor($financingOptionsData.term / periods); // años para analizar
+
+  let elements;
+  $: {
+    elements = [];
+    const resources = $resourceData.filter((el) => el.type === "Externo");
+    elements = resources.map((el) => getInterest(el));
+    console.log(elements);
+  }
+
+  function getInterest(item) {
+    const { description, rate, value } = item;
+    let copyValue = value;
+    let elements = [];
+    const nominalRate = calculateNominalRate(rate, periods);
+    const periodicRate = calculatePeriodicRate(nominalRate, periods);
+    const share = calculateShare(
+      copyValue,
+      periodicRate,
+      $financingOptionsData.term
+    );
+
+    for (let i = 0; i < $financingOptionsData.term; i++) {
+      const interest = copyValue * periodicRate;
+      const pay = share - interest;
+      copyValue -= pay;
+      elements.push(interest);
+    }
+    return [description, elements];
+  }
 
   function openModal() {
     showModal = true;
@@ -33,7 +67,7 @@
         <h2>Analisis flujo de caja</h2>
       </div>
       <div class="modal-content">
-        <YearAnalysis year={selectedYear} />
+        <YearAnalysis year={selectedYear} {elements} />
       </div>
       <div class="modal-footer">
         <div class="options">
@@ -73,8 +107,9 @@
     flex-direction: column;
     gap: 10px;
     overflow-y: auto;
+    overflow-x: auto;
     max-height: 300px;
-    min-width: 700px;
+    width: 800px;
   }
 
   .modal-footer {
