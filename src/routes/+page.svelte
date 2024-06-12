@@ -6,9 +6,15 @@
 
 <div class="container">
   <div class="section content-left">
-    <h1>Investment Simulator</h1>
-    <p>Maximiza tu potencial financiero con nuestra plataforma</p>
-    <p>¡Invierte con inteligencia, invierte con nosotros!</p>
+    <div class="header">
+      <h1>Investment Simulator</h1>
+      <p>Maximiza tu potencial financiero con nuestra plataforma</p>
+      <p>¡Invierte con inteligencia, invierte con nosotros!</p>
+    </div>
+    <div class="footer">
+      <p>© 2024 Gustavo Linero Gonzalez</p>
+      <p>Todos los derechos reservados</p>
+    </div>
   </div>
   <div class="section">
     <h1>¡Bienvenido!</h1>
@@ -30,7 +36,11 @@
     color: var(--color2);
   }
 
-  .section {
+  .header {
+    flex: 1;
+  }
+
+  .header, .footer, .section {
     display: flex;
     flex-direction: column;
     justify-content: center;

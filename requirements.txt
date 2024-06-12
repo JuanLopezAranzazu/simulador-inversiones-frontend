@@ -1,2 +1,9 @@
+git clone
+
+npm i
+
+dependencies:
+
 npm i svelte-routing
 npm i uuid
+npm i svelte-easy-toast
