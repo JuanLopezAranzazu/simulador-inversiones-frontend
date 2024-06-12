@@ -1,6 +1,6 @@
 <script>
   import { onDestroy } from "svelte";
-  import { SvelteEasyToast, toast } from "svelte-easy-toast";
+  import { toast } from "svelte-easy-toast";
   //store
   import { currencyData } from "./../../store/store";
 
@@ -75,8 +75,6 @@
     <button type="button" on:click={() => updateCurrency()}>Guardar</button>
   </div>
 </div>
-
-<SvelteEasyToast />
 
 <style>
   .currencies {

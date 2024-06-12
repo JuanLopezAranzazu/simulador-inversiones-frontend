@@ -1,5 +1,6 @@
 <script>
   import "./../../style/global.css";
+  import { SvelteEasyToast } from "svelte-easy-toast";
   //components
   import Header from "./Header.svelte";
 </script>
@@ -7,6 +8,7 @@
 <main>
   <Header />
   <div class="container"><slot /></div>
+  <SvelteEasyToast />
 </main>
 
 <style>

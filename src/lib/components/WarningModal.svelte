@@ -19,10 +19,16 @@
     </div>
     <div class="modal-footer">
       {#if state}
-        <button type="button" on:click={close}>Cancelar</button>
-        <button type="button" on:click={confirm}>Aceptar</button>
+        <button type="button" on:click={() => close()}>Cancelar</button>
+        <button
+          type="button"
+          on:click={() => {
+            confirm();
+            close();
+          }}>Aceptar</button
+        >
       {:else}
-        <button type="button" on:click={close}>Aceptar</button>
+        <button type="button" on:click={() => close()}>Aceptar</button>
       {/if}
     </div>
   </Modal>

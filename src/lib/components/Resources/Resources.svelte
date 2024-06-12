@@ -1,6 +1,6 @@
 <script>
   import { v4 as uuidv4 } from "uuid";
-  import { SvelteEasyToast, toast } from "svelte-easy-toast";
+  import { toast } from "svelte-easy-toast";
   //components
   import ResourceList from "./ResourceList.svelte";
   import Modal from "./../Modal.svelte";
@@ -269,8 +269,6 @@
     close={closeWarningModal}
   />
 </div>
-
-<SvelteEasyToast />
 
 <style>
   .resources {

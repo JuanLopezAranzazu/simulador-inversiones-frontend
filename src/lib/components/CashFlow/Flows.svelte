@@ -1,20 +1,17 @@
 <script>
   import { v4 as uuidv4 } from "uuid";
-  import { SvelteEasyToast, toast } from "svelte-easy-toast";
+  import { toast } from "svelte-easy-toast";
   //components
   import FlowList from "./FlowList.svelte";
   import Modal from "./../Modal.svelte";
   import Input from "./../Input.svelte";
-  import WarningModal from "../WarningModal.svelte";
   //store
   import { cashFlowData } from "./../../store/store";
-  //utils
 
   const flowTypes = ["Flujo de entrada", "Flujo de salida"];
   const outputTypes = ["Costo de operación", "Gastos operacionales"];
 
   let showModal = false;
-  let showWarningModal = false;
   let selectedCashFlow = null;
   let description = "";
   let value = 0; // precio o porcentaje
@@ -39,14 +36,6 @@
 
   function closeModal() {
     showModal = false;
-  }
-
-  function openWarningModal() {
-    showWarningModal = true;
-  }
-
-  function closeWarningModal() {
-    showWarningModal = false;
   }
 
   function createCashFlow(newCashFlow) {
@@ -244,8 +233,6 @@
     </Modal>
   {/if}
 </div>
-
-<SvelteEasyToast />
 
 <style>
   .cash-flows {

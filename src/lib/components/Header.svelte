@@ -62,6 +62,7 @@
 
   function handleExportClick() {
     exportData(data);
+    showOptions = false;
   }
 
   async function handleFileChange(event) {
@@ -75,6 +76,7 @@
       financingOptionsData.set(payload.financingOptions);
       growthFactorData.set(payload.growthFactors);
       cashFlowOptionsData.set(payload.cashFlowOptions);
+      showOptions = false;
     } catch (error) {
       console.error(error);
       openWarningModal();

@@ -1,6 +1,6 @@
 <script>
   import { goto } from "$app/navigation";
-  import { SvelteEasyToast, toast } from "svelte-easy-toast";
+  import { toast } from "svelte-easy-toast";
   //components
   import InvestmentList from "./InvestmentList.svelte";
   //store
@@ -80,8 +80,6 @@
     {deleteInvestment}
   />
 </div>
-
-<SvelteEasyToast />
 
 <style>
   .investments {

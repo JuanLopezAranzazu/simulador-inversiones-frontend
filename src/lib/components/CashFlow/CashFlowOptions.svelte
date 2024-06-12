@@ -1,5 +1,5 @@
 <script>
-  import { SvelteEasyToast, toast } from "svelte-easy-toast";
+  import { toast } from "svelte-easy-toast";
   //store
   import { cashFlowOptionsData } from "../../store/store";
 
@@ -65,8 +65,6 @@
     <button on:click={updateCashFlowOptions}>Guardar</button>
   </div>
 </div>
-
-<SvelteEasyToast />
 
 <style>
   .cash-flow-options {

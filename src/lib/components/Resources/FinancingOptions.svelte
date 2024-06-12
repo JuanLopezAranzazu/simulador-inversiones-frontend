@@ -1,5 +1,5 @@
 <script>
-  import { SvelteEasyToast, toast } from "svelte-easy-toast";
+  import { toast } from "svelte-easy-toast";
   //store
   import { financingOptionsData } from "../../store/store";
   //utils
@@ -64,8 +64,6 @@
     <button on:click={updateFinancingOptions}>Guardar</button>
   </div>
 </div>
-
-<SvelteEasyToast />
 
 <style>
   .financing-options {

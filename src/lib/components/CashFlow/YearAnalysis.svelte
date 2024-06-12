@@ -90,28 +90,51 @@
     el[1].slice((year - 1) * periods, year * periods),
   ]);
 
-  $: sumElementsByPeriod = elementsByPeriod.reduce((acc, curr) => {
-    return acc[1].map((num, idx) => num + curr[1][idx]);
-  });
-
-  // utilidad neta
-  $: totalMargin = Array(periods).fill(Math.round(totalIncome - totalExpenses));
-  let totalUtility;
+  // sumar los intereses totales por periodo
+  let sumElementsByPeriod = [];
   $: {
-    totalUtility = [];
-    for (let i = 0; i < periods; i++) {
-      totalUtility.push(Math.round(totalMargin[i] - sumElementsByPeriod[i]));
+    if (elementsByPeriod.length > 0) {
+      sumElementsByPeriod = elementsByPeriod.reduce((acc, curr) => {
+        if (acc.length === 0) {
+          return curr[1];
+        } else {
+          return acc.map((num, idx) => num + curr[1][idx]);
+        }
+      }, []);
+    } else {
+      sumElementsByPeriod = Array(periods).fill(0);
     }
   }
-  $: totalTaxProvision = totalUtility.map((el) =>
-    Math.round(el * ($cashFlowOptionsData.taxProvision / 100))
-  );
 
-  let totalNetIncome;
+  $: totalMargin = Array(periods).fill(Math.round(totalIncome - totalExpenses)); // margen operacional
+  let totalUtility = []; // utilidad antes de impuestos
+  $: {
+    totalUtility = [];
+    if (sumElementsByPeriod.length > 0) {
+      for (let i = 0; i < periods; i++) {
+        totalUtility.push(Math.round(totalMargin[i] - sumElementsByPeriod[i]));
+      }
+    } else {
+      totalUtility = Array(periods).fill(0);
+    }
+  }
+  let totalTaxProvision = []; // provision de impuestos
+  $: {
+    totalTaxProvision = [];
+    if (totalUtility.length > 0) {
+      totalTaxProvision = totalUtility.map((el) =>
+        Math.round(el * ($cashFlowOptionsData.taxProvision / 100))
+      );
+    }
+  }
+
+  let totalNetIncome = []; // utilidad neta
   $: {
     totalNetIncome = [];
-    for (let i = 0; i < periods; i++) {
-      totalNetIncome.push(Math.round(totalUtility[i] - totalTaxProvision[i]));
+    if (totalUtility.length > 0) {
+      for (let i = 0; i < periods; i++) {
+        totalNetIncome.push(Math.round(totalUtility[i] - totalTaxProvision[i]));
+      }
     }
   }
 </script>
