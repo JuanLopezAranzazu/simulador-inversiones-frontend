@@ -1,7 +1,7 @@
 <script>
   //components
-  import Text from "../Text.svelte";
-  import WarningModal from "../WarningModal.svelte";
+  import Text from "./../Elements/Text.svelte";
+  import WarningModal from "./../Elements/WarningModal.svelte";
   export let flow;
   export let updateCashFlow;
   export let deleteCashFlow;
@@ -30,7 +30,7 @@
         label="Precio / Porcentaje"
         value={`${flow.value.toLocaleString()}$`}
       />
-      <Text label="Tipo de inversión" value={flow.flowType} />
+      <Text label="Tipo de flujo" value={flow.flowType} />
     </div>
     <div class="flow-actions">
       <button type="button" on:click={() => updateCashFlow(flow)}>Editar</button

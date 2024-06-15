@@ -1,7 +1,7 @@
 <script>
   //components
   import Flow from "./Flow.svelte";
-  import Search from "../Search.svelte";
+  import Search from "./../Elements/Search.svelte";
   //utils
   import { searchItems } from "./../../utils/search";
   export let flows = [];
@@ -26,7 +26,7 @@
 
 <div class="flow-list">
   <div class="flow-list-header">
-    <span>Lista de inversiones</span>
+    <span>Lista de flujos</span>
     <Search onSearch={handleSearch} />
   </div>
   {#each filteredFlows as flow}

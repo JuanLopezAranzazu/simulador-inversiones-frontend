@@ -1,6 +1,6 @@
 <script>
   //components
-  import ModuleLayout from "../../lib/components/ModuleLayout.svelte";
+  import ModuleLayout from "../../lib/components/Elements/ModuleLayout.svelte";
   import Resources from "../../lib/components/Resources/Resources.svelte";
   import ResourceDetails from "../../lib/components/Resources/ResourceDetails.svelte";
   import FinancingAnalysis from "../../lib/components/Resources/FinancingAnalysis.svelte";

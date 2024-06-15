@@ -2,7 +2,7 @@
   import { onDestroy } from "svelte";
   import { toast } from "svelte-easy-toast";
   //store
-  import { currencyData } from "./../../store/store";
+  import { currencyData } from "../../store/store";
 
   function findCurrency(currencyName) {
     try {
@@ -50,7 +50,7 @@
 </script>
 
 <div class="currencies">
-  <h2>Monedas</h2>
+  <h2>Gestión de monedas</h2>
   <div class="form-element">
     <label for="usd">USD</label>
     <input

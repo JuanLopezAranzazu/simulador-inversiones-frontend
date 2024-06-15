@@ -1,7 +1,7 @@
 <script>
   //components
-  import ModuleLayout from "../../lib/components/ModuleLayout.svelte";
-  import Currencies from "../../lib/components/Currencies/Currencies.svelte";
+  import ModuleLayout from "../../lib/components/Elements/ModuleLayout.svelte";
+  import Currencies from "../../lib/components/Investments/Currencies.svelte";
   import Investments from "../../lib/components/Investments/Investments.svelte";
   import InvestmentDetails from "../../lib/components/Investments/InvestmentDetails.svelte";
 </script>

@@ -1,7 +1,7 @@
 <script>
   //components
   import Investment from "./Investment.svelte";
-  import Search from "../Search.svelte";
+  import Search from "./../Elements/Search.svelte";
   //utils
   import { searchItems } from "./../../utils/search";
   export let investments = [];

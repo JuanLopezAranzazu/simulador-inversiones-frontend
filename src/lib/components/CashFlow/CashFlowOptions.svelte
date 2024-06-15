@@ -38,7 +38,7 @@
 </script>
 
 <div class="cash-flow-options">
-  <h2>Opciones de financiamiento</h2>
+  <h2>Opciones de flujo de caja</h2>
   <div class="form-element">
     <label for="amortization">Depreciación y amortización</label>
     <input

@@ -1,8 +1,8 @@
 <script>
   //components
-  import Text from "../Text.svelte";
+  import Text from "./../Elements/Text.svelte";
   import SubelementList from "./../ManageInvestment/SubelementList.svelte";
-  import WarningModal from "../WarningModal.svelte";
+  import WarningModal from "./../Elements/WarningModal.svelte";
   //stores
   import { currencyData } from "./../../store/store";
   //utils

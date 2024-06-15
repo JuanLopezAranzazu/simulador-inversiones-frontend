@@ -1,13 +1,13 @@
 <script>
   //store
-  import { financingOptionsData } from "../store/store";
+  import { financingOptionsData } from "./../../store/store";
   //utils
   import {
     data,
     calculateNominalRate,
     calculatePeriodicRate,
     calculateShare,
-  } from "./../utils/calculate";
+  } from "./../../utils/calculate";
   export let item;
   let { value, rate } = item;
 

@@ -1,7 +1,7 @@
 <script>
   //components
   import Subelement from "./Subelement.svelte";
-  import Text from "../Text.svelte";
+  import Text from "./../Elements/Text.svelte";
   //utils
   import { calculateTotalInvestment } from "./../../utils/calculate";
   //store

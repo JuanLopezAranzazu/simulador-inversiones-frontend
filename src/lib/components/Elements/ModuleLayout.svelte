@@ -1,5 +1,5 @@
 <script>
-  import "./../../style/global.css";
+  import "./../../../style/global.css";
   import { SvelteEasyToast } from "svelte-easy-toast";
   //components
   import Header from "./Header.svelte";

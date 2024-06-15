@@ -1,7 +1,7 @@
 <script>
   import { SvelteEasyToast, toast } from "svelte-easy-toast";
   //components
-  import Modal from "../Modal.svelte";
+  import Modal from "./../Elements/Modal.svelte";
   //store
   import { growthFactorData } from "../../store/store";
 
@@ -61,39 +61,39 @@
   {#if showModal}
     <Modal>
       <div class="modal-header">
-        <h2>Factor de crecimiento</h2>
+        <h2>Factor de crecimiento %</h2>
       </div>
       <div class="modal-content">
         <div class="form-element">
-          <label for="units">Crecimiento por unidades</label>
+          <label for="units">Crecimiento por unidades %</label>
           <input
             id="units"
             type="number"
             bind:value={units}
             placeholder="Crecimiento por unidades"
-            min="0"
+            min="1"
             max="100"
           />
         </div>
         <div class="form-element">
-          <label for="prices">Crecimiento por precios</label>
+          <label for="prices">Crecimiento por precios %</label>
           <input
             id="prices"
             type="number"
             bind:value={prices}
             placeholder="Crecimiento por precios"
-            min="0"
+            min="1"
             max="100"
           />
         </div>
         <div class="form-element">
-          <label for="costs">Crecimiento por costos</label>
+          <label for="costs">Crecimiento por costos %</label>
           <input
             id="costs"
             type="number"
             bind:value={costs}
             placeholder="Crecimiento por costos"
-            min="0"
+            min="1"
             max="100"
           />
         </div>

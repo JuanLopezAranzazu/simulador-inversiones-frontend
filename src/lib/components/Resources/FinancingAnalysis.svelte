@@ -1,6 +1,6 @@
 <script>
   //components
-  import Modal from "../Modal.svelte";
+  import Modal from "./../Elements/Modal.svelte";
   //utils
   import { calculateNominalRate, data } from "./../../utils/calculate";
   //store

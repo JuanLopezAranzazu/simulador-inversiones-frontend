@@ -4,7 +4,7 @@
   import { writable } from "svelte/store";
   import { SvelteEasyToast, toast } from "svelte-easy-toast";
   //components
-  import ModuleLayout from "../../lib/components/ModuleLayout.svelte";
+  import ModuleLayout from "../../lib/components/Elements/ModuleLayout.svelte";
   import SubelementList from "../../lib/components/ManageInvestment/SubelementList.svelte";
   //store
   import {

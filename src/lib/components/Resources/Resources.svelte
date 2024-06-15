@@ -3,10 +3,9 @@
   import { toast } from "svelte-easy-toast";
   //components
   import ResourceList from "./ResourceList.svelte";
-  import Modal from "./../Modal.svelte";
-  import Input from "./../Input.svelte";
-  import Table from "./../Table.svelte";
-  import WarningModal from "../WarningModal.svelte";
+  import Modal from "./../Elements/Modal.svelte";
+  import Table from "./Table.svelte";
+  import WarningModal from "./../Elements/WarningModal.svelte";
   //store
   import {
     resourceData,

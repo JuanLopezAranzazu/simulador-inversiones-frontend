@@ -3,8 +3,7 @@
   import { toast } from "svelte-easy-toast";
   //components
   import FlowList from "./FlowList.svelte";
-  import Modal from "./../Modal.svelte";
-  import Input from "./../Input.svelte";
+  import Modal from "./../Elements/Modal.svelte";
   //store
   import { cashFlowData } from "./../../store/store";
 

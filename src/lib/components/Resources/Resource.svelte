@@ -1,7 +1,7 @@
 <script>
   //components
-  import Text from "./../Text.svelte";
-  import WarningModal from "../WarningModal.svelte";
+  import Text from "./../Elements/Text.svelte";
+  import WarningModal from "./../Elements/WarningModal.svelte";
   //store
   import { totalInvestment, financingOptionsData } from "../../store/store";
   //utils

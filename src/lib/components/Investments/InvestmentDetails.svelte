@@ -1,6 +1,6 @@
 <script>
   //components
-  import Text from "./../Text.svelte";
+  import Text from "./../Elements/Text.svelte";
   //store
   import {
     totalInvestmentByType1,

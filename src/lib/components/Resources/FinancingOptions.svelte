@@ -50,6 +50,8 @@
       type="number"
       bind:value={term}
       placeholder="Plazo en meses"
+      min="1"
+      max="100"
     />
   </div>
   <div class="form-element">

@@ -1,6 +1,6 @@
 <script>
   //components
-  import Modal from "../Modal.svelte";
+  import Modal from "./../Elements/Modal.svelte";
   import YearAnalysis from "./YearAnalysis.svelte";
   //store
   import { financingOptionsData, resourceData } from "./../../store/store";

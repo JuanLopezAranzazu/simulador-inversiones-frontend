@@ -1,14 +1,14 @@
 <script>
   // assets
-  import Icon from "../assets/Icon.svelte";
-  import Icon2 from "../assets/Icon2.svelte";
-  import Icon3 from "../assets/Icon3.svelte";
-  import Icon4 from "../assets/Icon4.svelte";
+  import Icon from "./../../assets/Icon.svelte";
+  import Icon2 from "./../../assets/Icon2.svelte";
+  import Icon3 from "./../../assets/Icon3.svelte";
+  import Icon4 from "./../../assets/Icon4.svelte";
   //components
   import Navbar from "./Navbar.svelte";
   //utils
-  import { exportData, importData } from "./../utils/data";
-  import { clickOutside } from "./../utils/event";
+  import { exportData, importData } from "./../../utils/data";
+  import { clickOutside } from "./../../utils/event";
   //store
   import {
     currencyData,
@@ -18,7 +18,7 @@
     financingOptionsData,
     growthFactorData,
     cashFlowOptionsData,
-  } from "./../store/store";
+  } from "./../../store/store";
   import WarningModal from "./WarningModal.svelte";
 
   const links = [
