@@ -6,9 +6,9 @@
   import { growthFactorData } from "../../store/store";
 
   let showModal = false;
-  let units = 0; // crecimiento por unidades
-  let prices = 0; // crecimiento por precios
-  let costs = 0; // crecimiento por costos
+  let units = 1; // crecimiento por unidades
+  let prices = 1; // crecimiento por precios
+  let costs = 1; // crecimiento por costos
 
   try {
     growthFactorData.subscribe((data) => {
@@ -30,6 +30,23 @@
 
   function updateGrowthFactor() {
     try {
+      if (
+        units < 1 ||
+        units > 100 ||
+        prices < 1 ||
+        prices > 100 ||
+        costs < 1 ||
+        costs > 100
+      ) {
+        toast({
+          type: "error",
+          position: "bottom-right",
+          text: "Las variables deben ser mayores a 0 y menores a 100!",
+          title: "Error al actualizar variables",
+          delay: 3000,
+        });
+        return;
+      }
       growthFactorData.update(
         (data) =>
           (data = {

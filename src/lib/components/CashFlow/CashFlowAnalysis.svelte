@@ -71,15 +71,18 @@
       </div>
       <div class="modal-footer">
         <div class="options">
-          {#each Array.from({ length: years }, (_, i) => i + 1) as year}
-            <button
-              type="button"
-              class:active={selectedYear === year}
-              on:click={() => (selectedYear = year)}>Año {year}</button
-            >
-          {/each}
+          <div class="form-element">
+            <label for="selectedYear">Seleccionar año</label>
+            <select id="selectedYear" bind:value={selectedYear}>
+              {#each Array.from({ length: years }, (_, i) => i + 1) as el}
+                <option value={el}>Año {el}</option>
+              {/each}
+            </select>
+          </div>
         </div>
-        <button on:click={closeModal}>Aceptar</button>
+        <div class="actions">
+          <button on:click={closeModal}>Aceptar</button>
+        </div>
       </div>
     </Modal>
   {/if}
@@ -108,7 +111,7 @@
     gap: 10px;
     overflow-y: auto;
     overflow-x: auto;
-    max-height: 300px;
+    max-height: 400px;
     width: 800px;
   }
 
@@ -118,14 +121,16 @@
     gap: 1rem;
   }
 
-  .active {
-    background-color: var(--color2);
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
   }
 
   .options {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    overflow-x: auto;
   }
 </style>

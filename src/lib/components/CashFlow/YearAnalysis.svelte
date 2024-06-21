@@ -137,12 +137,38 @@
       }
     }
   }
+
+  let totalNetCashFlow = []; // flujo de caja neto
+  $: {
+    totalNetCashFlow = [];
+    if (totalUtility.length > 0) {
+      for (let i = 0; i < periods; i++) {
+        totalNetCashFlow.push(
+          Math.round(
+            totalNetIncome[i] + sumElementsByPeriod[i] + totalAmortization
+          )
+        );
+      }
+    }
+  }
 </script>
 
 <div class="year-analysis">
   <div class="element-year-analysis">
+    <div
+      class="item-main-analysis"
+      style="background-color: var(--color1); cursor: auto;"
+    >
+      <h4 class="title">Descripción</h4>
+      {#each Array.from({ length: periods }, (_, i) => i + 1) as el}
+        <h4>T{el}</h4>
+      {/each}
+    </div>
+  </div>
+
+  <div class="element-year-analysis">
     <div class="item-main-analysis" on:click={seeInFlows}>
-      <h4>Flujo de entrada</h4>
+      <h4 class="title">Flujo de entrada</h4>
       {#each Array(periods).fill(Math.round(totalIncome).toLocaleString()) as el}
         <h4>{el}</h4>
       {/each}
@@ -151,7 +177,7 @@
       <div class="flow-list-analysis">
         {#each inflows as el}
           <div class="item item-secondary-analysis">
-            <p><b>{el.description}</b></p>
+            <p class="title"><b>{el.description}</b></p>
             {#each Array(periods).fill(totalInFlow(el)) as d}
               <p>{d}</p>
             {/each}
@@ -163,7 +189,7 @@
 
   <div class="element-year-analysis">
     <div class="item-main-analysis" on:click={seeOutFlows}>
-      <h4>Flujo de salida</h4>
+      <h4 class="title">Flujo de salida</h4>
       {#each Array(periods).fill(Math.round(totalExpenses).toLocaleString()) as el}
         <h4>{el}</h4>
       {/each}
@@ -172,14 +198,14 @@
       <div class="flow-list-analysis">
         {#each outflows as el}
           <div class="item item-secondary-analysis">
-            <p><b>{el.description}</b></p>
+            <p class="title"><b>{el.description}</b></p>
             {#each Array(periods).fill(totalOutFlow(el)) as d}
               <p>{d}</p>
             {/each}
           </div>
         {/each}
         <div class="item item-secondary-analysis">
-          <p><b>Depreciación y amortización</b></p>
+          <p class="title"><b>Depreciación y amortización</b></p>
           {#each Array(periods).fill(totalAmortization.toLocaleString()) as d}
             <p>{d}</p>
           {/each}
@@ -190,7 +216,7 @@
 
   <div class="element-year-analysis">
     <div class="item-main-analysis" on:click={seeExpenses}>
-      <h4>Gastos financieros</h4>
+      <h4 class="title">Gastos financieros</h4>
       {#each sumElementsByPeriod as el}
         <h4>{Math.round(el).toLocaleString()}</h4>
       {/each}
@@ -199,7 +225,7 @@
       <div class="flow-list-analysis">
         {#each elementsByPeriod as el}
           <div class="item item-secondary-analysis">
-            <p><b>{el[0]}</b></p>
+            <p class="title"><b>{el[0]}</b></p>
             {#each el[1] as d}
               <p>{Math.round(d).toLocaleString()}</p>
             {/each}
@@ -211,7 +237,7 @@
 
   <div class="element-year-analysis">
     <div class="item-main-analysis" on:click={seeNetIncome}>
-      <h4>Utilidad Neta</h4>
+      <h4 class="title">Utilidad Neta</h4>
       {#each totalNetIncome as el}
         <h4>{el.toLocaleString()}</h4>
       {/each}
@@ -219,25 +245,37 @@
     {#if viewNetIncome}
       <div class="flow-list-analysis">
         <div class="item item-secondary-analysis">
-          <p><b>Margen operacional</b></p>
+          <p class="title"><b>Margen operacional</b></p>
           {#each totalMargin as el}
             <p>{el.toLocaleString()}</p>
           {/each}
         </div>
         <div class="item item-secondary-analysis">
-          <p><b>Utilidad antes de impuestos</b></p>
+          <p class="title"><b>Utilidad antes de impuestos</b></p>
           {#each totalUtility as el}
             <p>{el.toLocaleString()}</p>
           {/each}
         </div>
         <div class="item item-secondary-analysis">
-          <p><b>Provisión de impuestos</b></p>
+          <p class="title"><b>Provisión de impuestos</b></p>
           {#each totalTaxProvision as el}
             <p>{el.toLocaleString()}</p>
           {/each}
         </div>
       </div>
     {/if}
+  </div>
+
+  <div class="element-year-analysis">
+    <div
+      class="item-main-analysis"
+      style="background-color: #000; cursor: auto;"
+    >
+      <h4 class="title">Flujo de caja neto</h4>
+      {#each totalNetCashFlow as el}
+        <h4>{el.toLocaleString()}</h4>
+      {/each}
+    </div>
   </div>
 </div>
 
@@ -279,11 +317,22 @@
   }
 
   .item-secondary-analysis {
+    display: flex;
+    align-items: center;
     box-shadow: none;
     padding: 0.5rem;
   }
 
   .item-secondary-analysis p {
     margin: 5px;
+  }
+
+  h4,
+  p {
+    flex: 1;
+  }
+
+  .title {
+    flex: 2;
   }
 </style>

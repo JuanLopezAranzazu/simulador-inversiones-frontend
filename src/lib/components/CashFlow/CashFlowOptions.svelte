@@ -3,8 +3,8 @@
   //store
   import { cashFlowOptionsData } from "../../store/store";
 
-  let amortization = 0;
-  let taxProvision = 0;
+  let amortization = 1;
+  let taxProvision = 1;
 
   try {
     cashFlowOptionsData.subscribe((data) => {
@@ -17,6 +17,21 @@
 
   function updateCashFlowOptions() {
     try {
+      if (
+        amortization < 1 ||
+        amortization > 100 ||
+        taxProvision < 1 ||
+        taxProvision > 100
+      ) {
+        toast({
+          type: "error",
+          position: "bottom-right",
+          text: "Las variables deben ser mayores a 0 y menores a 100!",
+          title: "Error al actualizar variables",
+          delay: 3000,
+        });
+        return;
+      }
       cashFlowOptionsData.update(
         (data) =>
           (data = {

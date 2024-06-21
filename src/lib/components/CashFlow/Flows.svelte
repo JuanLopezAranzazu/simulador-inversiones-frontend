@@ -13,7 +13,8 @@
   let showModal = false;
   let selectedCashFlow = null;
   let description = "";
-  let value = 0; // precio o porcentaje
+  let value = 0; // precio
+  let percentage = 0; // porcentaje
   let qty = 0; // la cantidad de unidades para los flujos de entrada
   let flowType = flowTypes[0];
   let outputType = outputTypes[0]; // tipo de egreso para los flujos de salida
@@ -23,6 +24,7 @@
   function resetFields() {
     description = "";
     value = 0;
+    percentage = 1;
     flowType = flowTypes[0];
     outputType = outputTypes[0];
     qty = 0;
@@ -37,8 +39,29 @@
     showModal = false;
   }
 
+  function validateData(cashFlow) {
+    if (
+      cashFlow.flowType === "Flujo de salida" &&
+      (cashFlow.value < 1 || cashFlow.value > 100)
+    ) {
+      toast({
+        type: "error",
+        position: "bottom-right",
+        text: "El porcentaje debe ser mayor a 0 y menor a 100!",
+        title: "Error al crear flujo de caja",
+        delay: 3000,
+      });
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   function createCashFlow(newCashFlow) {
     try {
+      if (validateData(newCashFlow)) {
+        return;
+      }
       cashFlowData.update((data) => [
         ...data,
         { _id: uuidv4(), ...newCashFlow },
@@ -58,6 +81,9 @@
 
   function updateCashFlow(updatedCashFlow) {
     try {
+      if (validateData(updatedCashFlow)) {
+        return;
+      }
       cashFlowData.update((data) =>
         data.map((cashFlow) =>
           cashFlow._id === selectedCashFlow._id
@@ -87,7 +113,7 @@
         type: "success",
         position: "bottom-right",
         text: "Se ha eliminado el recurso correctamente!",
-        title: "Recurso eliminado",
+        title: "Flujo de caja eliminado",
         delay: 3000,
       });
     } catch (error) {
@@ -171,15 +197,6 @@
           />
         </div>
         <div class="form-element">
-          <label for="value">Precio / Porcentaje</label>
-          <input
-            id="value"
-            type="number"
-            bind:value
-            placeholder="Precio / Porcentaje"
-          />
-        </div>
-        <div class="form-element">
           <label for="flowType">Tipo de flujo</label>
           <select id="flowType" bind:value={flowType}>
             {#each flowTypes as t}
@@ -188,6 +205,15 @@
           </select>
         </div>
         {#if flowType === "Flujo de entrada"}
+          <div class="form-element">
+            <label for="value">Precio por unidad</label>
+            <input
+              id="value"
+              type="number"
+              bind:value
+              placeholder="Precio por unidad"
+            />
+          </div>
           <div class="form-element">
             <label for="qty">Cantidad de unidades</label>
             <input
@@ -198,6 +224,17 @@
             />
           </div>
         {:else}
+          <div class="form-element">
+            <label for="value">Porcentaje</label>
+            <input
+              id="value"
+              type="number"
+              bind:value={percentage}
+              placeholder="Porcentaje"
+              min="1"
+              max="100"
+            />
+          </div>
           <div class="form-element">
             <label for="outputType">Tipo de egreso</label>
             <select id="outputType" bind:value={outputType}>
@@ -216,7 +253,7 @@
             const elementData = {
               description,
               flowType,
-              value,
+              value: flowType === "Flujo de entrada" ? value : percentage,
             };
             if (flowType === "Flujo de entrada") {
               elementData.qty = qty;

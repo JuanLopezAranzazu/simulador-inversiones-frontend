@@ -27,8 +27,10 @@
         <Text label="Tipo de egreso" value={flow.outputType} />
       {/if}
       <Text
-        label="Precio / Porcentaje"
-        value={`${flow.value.toLocaleString()}$`}
+        label={flow.flowType === "Flujo de entrada"
+          ? "Precio por unidad"
+          : "Porcentaje"}
+        value={`${flow.value.toLocaleString()}${flow.flowType === "Flujo de entrada" ? "$" : "%"}`}
       />
       <Text label="Tipo de flujo" value={flow.flowType} />
     </div>

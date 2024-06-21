@@ -7,7 +7,7 @@
 
   const keys = Object.keys(data);
 
-  let term = 0; // plazo en meses para el financiamiento
+  let term = 1; // plazo en meses para el financiamiento
   let periodicity = keys[0]; // periodicidad del financiamiento
 
   try {
@@ -21,6 +21,16 @@
 
   function updateFinancingOptions() {
     try {
+      if (term < 1 || term > 100) {
+        toast({
+          type: "error",
+          position: "bottom-right",
+          text: "El plazo debe ser mayor a 0 y menor a 100 meses!",
+          title: "Error al actualizar variables",
+          delay: 3000,
+        });
+        return;
+      }
       financingOptionsData.update(
         (data) =>
           (data = {
